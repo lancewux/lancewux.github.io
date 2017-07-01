@@ -13,7 +13,7 @@
 
 **这些文字显示为粗体**
 
-行的开头空4个空格，表示程序代码，例如：
+行的开头空4个空格，表示程序代码，例如： markdown preview
 
 C#:
 
@@ -30,7 +30,7 @@ Python:
     print dict([(i[0],list(i[1])) for i in groupby(sorted(keywords),lambda    x:x[0].lower())])
 
 Javascript:
-···javascripy
+···javascript
 
     /**
      * nth element in the fibonacci series.
