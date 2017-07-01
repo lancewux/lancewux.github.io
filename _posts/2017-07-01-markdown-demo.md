@@ -1,3 +1,4 @@
+
 单个回车
 视为空格。
 
@@ -29,6 +30,7 @@ Python:
     print dict([(i[0],list(i[1])) for i in groupby(sorted(keywords),lambda    x:x[0].lower())])
 
 Javascript:
+···javascripy
 
     /**
      * nth element in the fibonacci series.
@@ -47,7 +49,7 @@ Javascript:
     }
 
     document.write(fib(10));
-
+```
 
     >表示引用文字内容。
 
@@ -98,4 +100,17 @@ Javascript:
 
 [1]:http://www.ituring.com.cn
 [2]:http://www.ituring.com.cn/Content/img/Turing.Gif
+
+> This is the first level of quoting.
+>
+> > This is nested blockquote.
+>
+> Back to the first level.
+
+|第一列|第二列|第三列|
+|:-:|:-|-:|
+|第一列是居中的|第二列是居左的|第三列是居右的|
+
+
+
 
