@@ -1,4 +1,3 @@
-Javascript 单线程和异步
 <h1 align="center"> Javascript 单线程和异步</h1>
 
 　　作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？
@@ -18,3 +17,34 @@ Javascript 单线程和异步
 
 <p align="center"><img src="/images/posts/2017-07-03/eventloop.png" /></p>
 
+　　为了提高渲染效率，浏览器规定，界面渲染线程和主线程是互斥的，主线程执行任务时，浏览器渲染线程处于挂起状态。
+
+定时器
+-
+
+　　除了放置异步任务的事件，"回调队列"还可以放置定时事件，即指定某些代码在多少时间之后执行，即定时器。主要由setTimeout()和setInterval()这两个函数来完成。
+
+　　setTimeout()接受两个参数，第一个是回调函数，第二个是推迟执行的毫秒数。HTML5标准规定了setTimeout()的第二个参数的最小值（最短间隔），不得低于4毫秒，如果低于这个值，就会自动增加。在此之前，老版本的浏览器都将最短间隔设为10毫秒。另外，对于那些DOM的变动（尤其是涉及页面重新渲染的部分），通常不会立即执行，而是每16毫秒执行一次。这时使用requestAnimationFrame()的效果要好于setTimeout()。
+
+Node.js的Event Loop
+-
+
+　　关于Node.js的第一个基本概念是I/O操作开销是巨大的：
+
+<p align="center"><img src="/images/posts/2017-07-03/iocost.jpg" /></p>
+
+有几种方法来改善性能：
+
+- 同步方式  按次序一个一个的处理请求。利：简单；弊：任何一个请求都可以阻塞其他所有请求。
+- 开启新进程  每个请求都开启一个新进程。利：简单；弊：大量的链接意味着大量的进程。
+- 开启新线程  每个请求都开启一个新线程。利：简单，而且跟进程比，对系统内核更加友好，因为线程比进程轻的多;弊:不是所有的机器都支持线程，而且对于要处理共享资源的情况，多线程编程会很快变得太过于复杂。
+
+　　第二个基本概念是为每个连接都创建一个新线程是很消耗内存的（例如：对比Nginx，Apache要消耗很多内存）。
+
+
+
+
+
+<a src="http://www.ruanyifeng.com/blog/2014/10/event-loop.html/">JavaScript 运行机制详解：再谈Event Loop</a>
+
+<a src="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
