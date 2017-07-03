@@ -16,4 +16,4 @@ js是单线程语言，浏览器只分配给js一个主线程，同时分配堆�
 
 当执行栈中的代码执行完毕时，主线程就会去读取"回调队列"里的事件，依次把那些事件所对应的回调函数压入栈中执行。然后再回到上一步。
 
-![event loop image](/images/posts/2017-07-03/eventloop.png)
+<p align="center"><img src="/images/posts/2017-07-03/eventloop.png" /></p>
