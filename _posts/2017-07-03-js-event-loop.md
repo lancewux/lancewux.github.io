@@ -9,6 +9,8 @@
 任务（回调）队列
 -
 
+　　An event loop is "an entity that handles and processes external events and converts them into callback invocations".
+
 　　js是单线程语言，浏览器只分配给js一个主线程，同时分配堆（heap）和栈（stack），用来执行任务（函数）。js线程运行时，一次把同步任务（synchronous）压入执行栈中，依次执行，比如&lt;script&gt;标签内的同步语句和函数。
 
 　　执行栈中的代码在执行时，会调用webAPIs来发出异步任务请求，这些任务主要包括网络请求，定时器和事件监听等，浏览器会为其分配对应的线程来处理这些任务，比如http请求线程，浏览器定时触发器线程，浏览器事件触发线程。当这些线程执行完任务时，就会往回调队列中添加一个事件。
@@ -52,12 +54,29 @@ Node.js的Event Loop
 - 开启新线程  
 每个请求都开启一个新线程。利：简单，而且跟进程比，对系统内核更加友好，因为线程比进程轻的多;弊:不是所有的机器都支持线程，而且对于要处理共享资源的情况，多线程编程会很快变得太过于复杂。
 
-　　第二个基本概念是为每个连接都创建一个新线程是很消耗内存的（例如：对比Nginx，Apache要消耗很多内存）。
+　　第二个基本概念是为每个连接都创建一个新线程是很消耗内存的（例如：对比Nginx，Apache要吃掉很多内存）。
 
 
+#### Node.js让你的代码运行在一个单线程之中， 然而，除了你的代码，其它的一切都是并行执行的
+
+　　你不能并行执行任何代码，一个sleep函数也会阻塞服务1s。当这段代码运行时，Node.js不会响应客户端任何请求，因为只有一个线程来运行你的代码，另外，如果你执行cpu密集的任务，比如重设图像的大小，它也会阻塞所有请求。
+
+```javascript
+while(new Date().getTime() < now + 1000) {
+    // do nothing
+}
+```
+
+　　Node.js也是单线程的Event Loop，但是它的运行机制不同于浏览器环境。
+
+<p align="center"><img src="/images/posts/2017-07-03/nodejseventlop.png" /></p>
+
+- V8引擎解析JavaScript脚本。
+- 解析后的代码，调用Node API，并进入LIBUV的第一个事件的回调函数。
+- libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。
+- V8引擎再将结果返回给用户。
 
 
+<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html/">JavaScript 运行机制详解：再谈Event Loop</a>
 
-<a src="http://www.ruanyifeng.com/blog/2014/10/event-loop.html/">JavaScript 运行机制详解：再谈Event Loop</a>
-
-<a src="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
+<a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
