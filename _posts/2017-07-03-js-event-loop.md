@@ -76,6 +76,36 @@ while(new Date().getTime() < now + 1000) {
 - libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。
 - V8引擎再将结果返回给用户。
 
+process.nextTick和setImmediate
+-
+
+process.nextTick方法在当前"执行栈"的尾部----下一次Event Loop（主线程读取"任务队列"）之前----添加回调函数。setImmediate方法则是在当前"任务队列"的尾部添加事件，与setTimeout(fn, 0)很像。
+
+```javascript
+process.nextTick(function A() {
+  console.log(1);
+  process.nextTick(function B(){console.log(2);});
+});
+setTimeout(function timeout() {
+  console.log('TIMEOUT');
+}, 0);
+console.log(3);
+// 3 1 2 TIMEOUT
+```
+
+```javascript
+setImmediate(function A() {
+  console.log(1);
+  setImmediate(function B(){console.log(2);});
+});
+setTimeout(function timeout() {
+  console.log('TIMEOUT');
+}, 0);
+console.log(3);
+//3 1 TIMEOUT 2 (理论值，实际上可能为 3 TIMEOUT 1 2)
+```
+
+### reference
 
 <a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html/">JavaScript 运行机制详解：再谈Event Loop</a>
 
