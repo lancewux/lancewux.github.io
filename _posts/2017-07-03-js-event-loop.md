@@ -62,6 +62,7 @@ Node.js的Event Loop
 　　你不能并行执行任何代码，一个sleep函数也会阻塞服务1s。当这段代码运行时，Node.js不会响应客户端任何请求，因为只有一个线程来运行你的代码，另外，如果你执行cpu密集的任务，比如重设图像的大小，它也会阻塞所有请求。
 
 ```javascript
+var now = new Date().getTime();
 while(new Date().getTime() < now + 1000) {
     // do nothing
 }
@@ -105,8 +106,8 @@ console.log(3);
 //3 1 TIMEOUT 2 (理论值，实际上可能为 3 TIMEOUT 1 2)
 ```
 
-### reference
+### Reference
 
-<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html/">JavaScript 运行机制详解：再谈Event Loop</a>
+<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a>
 
 <a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
