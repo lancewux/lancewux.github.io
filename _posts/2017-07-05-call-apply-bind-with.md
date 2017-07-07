@@ -95,6 +95,8 @@ call的参数是一个个传入的，而apply的参数是一数组的方式传�
 		</script>
 ```
 
+实现bind的源码
+
 ```html
 		<script>
 			Function.prototype.bind = function(context){
@@ -130,7 +132,6 @@ with (expression) statement
 		</script>
 ```
 
-实现bind的源码
 
 ### Reference
 
