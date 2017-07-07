@@ -124,7 +124,7 @@ with用于改变作用域，将指定的对象添加到作用域链前端。
 with (expression) statement
 
 ```html
-<script>
+		<script>
 			var msg = 'hello';
 			with(msg) {
 				console.log(toUpperCase());
