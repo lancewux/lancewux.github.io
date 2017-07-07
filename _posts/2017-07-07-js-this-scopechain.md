@@ -112,3 +112,31 @@ this对象
 		</script>
 ```
 
+```html
+		<script>
+			function fn() {
+				this.x = 1;
+				y = 16;
+			}
+			console.log(fn.name); //fn (function 关键字会新建一个function对象，名字为fn)
+			console.log(fn.x); //undefined
+			console.log(fn.y); //undefined
+		</script>
+```
+
+```html
+		<script>
+			var x = 1;
+			var fn1 = function() {
+				console.log(this.x);
+			};
+			var obj = {
+				x: 2
+			};
+			obj.fn1 = function() {
+				console.log(this.x);
+			}
+			fn1(); //1 (this = window)
+			obj.fn1(); //2 (this = obj)
+		</script>
+```
