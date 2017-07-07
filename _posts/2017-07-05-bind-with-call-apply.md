@@ -35,4 +35,26 @@ call的参数是一个个传入的，而apply的参数是一数组的方式传�
 			p1.showInfo.bind(a1, 14)('male'); //honey : 14 , male (this = a1)
 		</script>
 ```
+###### bind应用
 
+与setTimeout一起使用
+
+```html
+<script>
+			function Fn() {
+				this.x = 1;
+			}
+			function fn1() {
+				console.log(this.x);
+			}
+			Fn.prototype.fn2 = function() {
+				setTimeout(fn1, 100);
+			}
+			Fn.prototype.fn3 = function() {
+				setTimeout(fn1.bind(this), 200);
+			}
+			var obj = new Fn();
+			obj.fn2(); //undefined (this = window)
+			obj.fn3(); //1 (window = obj)
+		</script>
+```
