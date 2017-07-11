@@ -113,10 +113,10 @@
 
 ```html
 		<script>
-			function inheritPrototype(subType, superType) {
-				var prototype = Object(superType.prototype);
-				prototype.constructor = subType;
-				subType.prototype = prototype;
+			function inheritPrototype(subType, superType) { //寄生模式
+				var prototype = Object(superType.prototype); //创建对象
+				prototype.constructor = subType; //增强对象
+				subType.prototype = prototype; //指定对象
 			}
 			function SuperType(name) {
 				this.name = name;
