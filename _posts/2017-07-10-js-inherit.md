@@ -44,7 +44,7 @@
 经典继承（借用构造函数）
 -
 
-方法是在子类的构造函数的内部调用父类的构造函数。解决了父类属性不能单独使用和不能向父类构造函数传递参数的问题。其缺点是方法不能共享。
+思路是在子类的构造函数的内部调用父类的构造函数。解决了父类属性不能单独使用和不能向父类构造函数传递参数的问题。其缺点是方法都在构造函数中定义，无法复用。
 
 ```html
 		<script>
@@ -67,4 +67,85 @@
 
 组合继承（伪经典继承）
 -
+
+指的是将原型链和借用构造函数的技术组合到一起，融合了二者的优点，成为最常用的继承模式。背后的思想是使用原型链实现对原型属性和方法的继承，而通过解压构造函数来实现对实例属性的继承。访问时，实例属性会覆盖原型属性。所以，通过原型方法实现了方法的复用，然后通过实例属性实现了属性的独立性。
+
+```html
+		<script>
+			function SuperType(name) {
+				this.name = name;
+				this.colors = ['red'];
+			}
+			SuperType.prototype.sayName = function () {
+				console.log(this.name);
+			}
+			function SubType(name, age) {
+				//继承属性
+				SuperType.call(this, name); //第二次调用SuperType()
+				this.age = age;
+			}
+			//继承方法
+			SubType.prototype = new SuperType(); //第一次调用SuperType()
+			SubType.prototype.sayAge = function() {
+				console.log(this.age);
+			}
+			var instance1 = new SubType('Nicholas', 29);
+			instance1.colors.push('green');
+			console.log(instance1.colors); //["red", "green"]
+			instance1.sayName(); //'Nicholas'
+			instance1.sayAge(); //29
+			var instance2 = new SubType('Tom', 18);
+			instance2.colors.push('blue');
+			console.log(instance2.colors); //["red", "blue"]
+			instance2.sayName(); //'Tom'
+			instance2.sayAge(); //18
+		</script>
+```
+
+组合继承的问题是会调用两次父类构造函数，父类的实例属性会有两个副本，造成效率问题。
+
+<p align="center"><img src="/images/posts/2017-07-10/combine-inherit.png" /></p>
+
+寄生组合式继承
+-
+
+通过借用构造函数来继承属性，通过原型链的混合形式来继承方法。继承父类的原型链时，不调用父类的构造函数，而是直接获得父类构造函数的原型。所以父类的实例属性就不会有两个副本了。
+
+```html
+		<script>
+			function inheritPrototype(subType, superType) {
+				var prototype = Object(superType.prototype);
+				prototype.constructor = subType;
+				subType.prototype = prototype;
+			}
+			function SuperType(name) {
+				this.name = name;
+				this.colors = ['red'];
+			}
+			SuperType.prototype.sayName = function () {
+				console.log(this.name);
+			}
+			function SubType(name, age) {
+				//继承属性
+				SuperType.call(this, name);
+				this.age = age;
+			}
+			//只继承原型方法
+			inheritPrototype(SubType, SuperType);
+			SubType.prototype.sayAge = function() {
+				console.log(this.age);
+			}
+			var instance1 = new SubType('Jack', 16);
+			instance1.colors.push('green');
+			console.log(instance1.colors); //["red", "green"]
+			instance1.sayName(); //'Jack'
+			instance1.sayAge(); //16
+			var instance2 = new SubType('Tom', 18);
+			instance2.colors.push('blue');
+			console.log(instance2.colors); //["red", "blue"]
+			instance2.sayName(); //'Tom'
+			instance2.sayAge(); //18
+			console.log(instance2 instanceof SuperType); //true
+		</script>
+```
 
