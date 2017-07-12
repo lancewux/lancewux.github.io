@@ -34,6 +34,8 @@ cookie会被同源的http请求携带，参与服务器通信。而sessionStorag
 
 作用域不同。cookie和localStorage可以在同源窗口中共享，sessionStorage只对当前的浏览器窗口有效。
 
+Web Storage 支持事件通知机制，可以将数据更新的通知发送给监听者
+
 
 ### Reference
 
