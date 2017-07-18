@@ -92,6 +92,7 @@ scrollTop
 							cur = tmp;
 							elP.innerText = 'top is inner ' + cur;
 						}
+						lockscroll = 0;
 					}, 200);
 				}
 			}
@@ -151,8 +152,8 @@ scrollTop
 			function setPosition(e, elCopy) {
 				var x = e.x, y = e.y;
 				var liH = elCopy.offsetHeight, liW = elCopy.offsetWidth;
-				elCopy.style.top = y - liH / 2;
-				elCopy.style.left = x - liW / 2;
+				elCopy.style.top = (y - liH / 2) + 'px';
+				elCopy.style.left = (x - liW / 2) + 'px';
 			}
 			function mouseupHandler(event) {
 				if(ismousedown === 1) {
@@ -195,6 +196,100 @@ scrollTop
 		</script>
 ```
 
+示例：拖拽方块，方块间用svg斜线连接。
+
+注意的问题是：
+- svg里的元素是相对svg定位的，要把svg的left和top设置为0px，svg里面的坐标才会和窗口的坐标重合。
+- 很难保证鼠标move和up事件的target一定会是拖拽的对象，所以用全局对象elDrag判断更合适。
+- style.top和style.left都是带单位的，分别对应y轴和x轴。
+
+```html
+		<div id="js-div1" style="width:50px; height:50px;background-color:gray;position:absolute;z-index: 1;" align="center">
+			<p>A</p>
+		</div>
+		<div id="js-div2" style="width:50px; height:50px;background-color:gray;position:absolute;z-index: 1;" align="center">
+			<p>B</p>
+		</div>
+		<svg id="js-svg" width="100%" height="100%" style="position: absolute;">
+			<line id="js-line" x1="100" y1="100" x2="300" y2="300" style="stroke:rgb(99,0,99);stroke-width:2"/>
+		</svg>
+		<script>
+			var elDiv1 = document.getElementById('js-div1');
+			var elDiv2 = document.getElementById('js-div2');
+			var elSvg = document.getElementById('js-svg');
+			var elLine = document.getElementById('js-line');
+			var isDragging = false;
+			var elDrag = null;
+			//设置svg的起始位置，以便定位
+			elSvg.style.top = '0px';
+			elSvg.style.left = '0px';
+			setPosition(elDiv1, 100, 100);
+			setPosition(elDiv2, 300, 300);
+			if(document.addEventListener) {
+				document.addEventListener('mousedown', mousedownHandler);
+				document.addEventListener('mousemove', mousemoveHandler);
+				document.addEventListener('mouseup', mouseupHandler);
+			} else {
+				document.attachEvent('onmousedown', mousedownHandler);
+				document.attachEvent('onmousemove', mousemoveHandler);
+				document.attachEvent('onmouseup', mouseupHandler);
+			}
+			function mousedownHandler(event) {
+				var e = event || window.event;
+				var target = e.target || e.srcElement;
+				if(!isDragging) {
+					var id = target.getAttribute('id');
+					if(id && (id == 'js-div1' || id == 'js-div2')) {
+						isDragging = true;
+						elDrag = target;
+						setPosition(elDrag, e.x, e.y);
+					}
+				}
+				
+			}
+			function mousemoveHandler(event) {
+				var e = event || window.event;
+				if(isDragging) { 
+					setPosition(elDrag, e.x, e.y);
+					//这里用elDrag来判断，因为e.target不一定会是elDrag
+					if(elDrag.getAttribute('id') == 'js-div1') {
+						setLineStart(e.x, e.y);
+					} else {
+						setLineEnd(e.x, e.y);
+					}
+				}
+			}
+			function mouseupHandler(event) {
+				var e = event || window.event;
+				var target = e.target || e.srcElement;
+				if(isDragging) {
+					//这里用elDrag来判断，因为e.target不一定会是elDrag
+					var id = elDrag.getAttribute('id');
+					isDragging = false;
+					elDrag = null;
+					if(id == 'js-div1') {
+						setLineStart(e.x, e.y);
+					} else {
+						setLineEnd(e.x, e.y);
+					}
+				}
+			}
+			function setPosition(el, x, y) {
+				if(el) {
+					el.style.top = (y - 25) + 'px'; //注意top对应y
+					el.style.left = (x - 25) + 'px';
+				}
+			}
+			function setLineStart(x1, y1) {
+				elLine.setAttribute('x1', x1);
+				elLine.setAttribute('y1', y1);
+			}
+			function setLineEnd(x2, y2) {
+				elLine.setAttribute('x2', x2);
+				elLine.setAttribute('y2', y2);
+			}
+		</script>
+```
 
 ### Reference
 
