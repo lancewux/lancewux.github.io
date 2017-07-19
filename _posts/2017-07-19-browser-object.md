@@ -1,10 +1,82 @@
 <h1 align="center"> Browser 对象</h1>
 
-Browser 对象
+Window 对象
+-
 
-- window
-- navigator
-- screen
-- history
-- location
+Window对象表示浏览器中打开的窗口。一个窗口对应一个window对象。如果文档包含框架（frame 或 iframe 标签），浏览器会为每个框架创建一个对应的 window 对象。
+
+window对象的主要属性包括：
+
+- document 对 Document 对象的只读引用。
+- history 对 History 对象的只读引用。
+- screen 对 Screen 对象的只读引用
+- navigator 对 Navigator 对象的只读引用。
+- location 用于窗口或框架的 Location 对象。
+- name 设置或返回窗口的名称。
+
+Document 对象
+-
+
+每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。
+
+主要属性包括：
+
+- body 提供对 <body> 元素的直接访问。
+- cookie 设置或返回与当前文档有关的所有 cookie。
+- domain 返回当前文档的域名。
+- title 返回当前文档的标题。
+- URL 返回当前文档的 URL。
+
+主要对象方法：
+
+- getElementById() 返回对拥有指定 id 的第一个对象的引用。
+- getElementsByName() 返回带有指定名称的对象集合。
+- getElementsByTagName() 返回带有指定标签名的对象集合。
+- createElement() 创建元素节点
+- createTextNode() 创建文本节点
+- write() 向文档写 HTML 表达式 或 JavaScript 代码。
+
+Element 对象
+-
+
+从HTML DOM Document 对象可以获得HTML DOM Element 对象。Element 对象表示 HTML 元素。 Element 对象可以拥有类型为元素节点、文本节点、注释节点的子节点。
+
+在 HTML DOM （文档对象模型）中，每个部分都是节点。文档本身是文档节点。所有 HTML 元素是元素节点。所有 HTML 属性是属性节点。HTML 元素内的文本是文本节点。注释是注释节点。推测所有节点对象都继承了同一个节点超类。
+
+主要属性：
+
+- childNodes 返回元素子节点的 NodeList。不是后代节点。元素中的换行符和文本也会被当作文本子节点。
+
+主要对象方法：
+
+- appendChild(elChild) 向元素添加新的子节点，作为最后一个子节点。添加到页面中的节点仍然可以用elChild访问，因为elChild是引用类型。
+- cloneNode(deep) 克隆元素。deep为true时克隆所有后代。
+
+
+```html
+		<div id="div" class="red cool">
+			<p id="p1">para 1</p>
+			<p id="p2">para 2</p>
+			<div id="div1">
+				<p id="p3">para 3</p>
+			</div>
+		</div>
+		<script>
+			var elDiv = document.getElementById('div');
+			var elP1 = document.getElementById('p1');
+			var elP1c = elDiv.childNodes[1];
+			var elP1cc = elP1.cloneNode(true);
+			console.log(elP1.isEqualNode(elP1c));
+			console.log(elP1.isSameNode(elP1c));
+			console.log(elP1.isEqualNode(elP1cc));
+			console.log(elP1.isSameNode(elP1cc));
+			// console.log(elDiv.className);
+			// var elA = document.createElement('a');
+			// elDiv.appendChild(elA);
+			// elA.setAttribute('id', 'aa');
+			// elA.innerText = 'ddf';
+			// console.log(elDiv.childNodes);
+		</script>
+```
+
 
