@@ -45,37 +45,53 @@ Element 对象
 
 主要属性：
 
+- parentNode 父节点
 - childNodes 返回元素子节点的 NodeList。不是后代节点。元素中的换行符和文本也会被当作文本子节点。
+- firstChild 首个子节点，一般是回车符文本节点
+- lastChild 最后一个子节点，一般是回车符文本节点
+- nextSibling 位于相同节点树层级的下一个节点，一般是回车符文本节点
+- previousSibling 位于相同节点树层级的前一个元素，一般是回车符文本节点
+- nodeType 节点类型，有12种值，1为元素节点，2为属性节点，3为文本节点
+
 
 主要对象方法：
 
-- appendChild(elChild) 向元素添加新的子节点，作为最后一个子节点。添加到页面中的节点仍然可以用elChild访问，因为elChild是引用类型。
-- cloneNode(deep) 克隆元素。deep为true时克隆所有后代。
-
+- appendChild(node) 向元素添加新的子节点，作为最后一个子节点。添加到页面中的节点仍然可以用node变量访问，因为node是引用类型。
+- insertBefore(newItem,existingItem) 在指定的已有子节点之前插入新的子节点。
+- removeChild(node) 从元素中移除子节点
+- replaceChild(newnode,oldnode) 替换元素中的子节点。
+- cloneNode(deep) 克隆元素。克隆节点及其后代，deep为true时还克隆属性。
+- isEqualNode(node) 检查两个元素是否相等。包括类型，属性，后代元素等
+- isSameNode(node) 检查两个元素是否是相同的节点。 效果类似于‘===’操作符。
+- compareDocumentPosition(node) & 16 判断node是否为元素的后代元素（firefox支持）
+- contains(node) 判断node是否为元素的后代元素（大部分浏览器支持）
+- hasChildNodes() 是否拥有子节点
+- getAttribute(attributename) 获取属性值
+- setAttribute(attributename,attributevalue) 设置属性值
+- getAttributeNode(attributename) 返回指定的属性节点
 
 ```html
-		<div id="div" class="red cool">
-			<p id="p1">para 1</p>
+		<div id="div" class="red cool" style="position:relative">
+			<p id="p1" style="position:absolute;top:-40px;">para 1</p>
 			<p id="p2">para 2</p>
-			<div id="div1">
-				<p id="p3">para 3</p>
+			<div id="div1" >
+				<p id="p3" >para 3</p>
 			</div>
 		</div>
 		<script>
 			var elDiv = document.getElementById('div');
 			var elP1 = document.getElementById('p1');
 			var elP1c = elDiv.childNodes[1];
-			var elP1cc = elP1.cloneNode(true);
-			console.log(elP1.isEqualNode(elP1c));
-			console.log(elP1.isSameNode(elP1c));
-			console.log(elP1.isEqualNode(elP1cc));
-			console.log(elP1.isSameNode(elP1cc));
-			// console.log(elDiv.className);
-			// var elA = document.createElement('a');
-			// elDiv.appendChild(elA);
-			// elA.setAttribute('id', 'aa');
-			// elA.innerText = 'ddf';
-			// console.log(elDiv.childNodes);
+			var elP1n = elP1.cloneNode(true); //深拷贝，拷贝后代元素
+			console.log(elP1.isSameNode(elP1c)); //true 说明element也属于node类型
+			console.log(elP1.isEqualNode(elP1n)); //true 深复制的元素是相等的
+			console.log(elP1.isSameNode(elP1n)); //false 深复制的元素是一个副本，并不是原来的元素
+			console.log(elDiv.contains(elP1)); //true 是后代元素，与渲染位置无关
+			console.log(elDiv.compareDocumentPosition(elP1) & 16);  //16 是后代元素
+			console.log(elP1.firstChild.nodeType);  //3 是后代元素
+			var elA = document.createElement('a');
+			elDiv.appendChild(elA);  //添加时没有新建副本，把elA节点添加进去了，elA就是页面上新添加元素的索引
+			elA.innerText = 'ddf'; //设置的文本会更新到页面上
 		</script>
 ```
 
