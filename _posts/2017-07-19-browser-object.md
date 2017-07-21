@@ -95,4 +95,88 @@ Element 对象
 		</script>
 ```
 
+Cookies
+-
+
+cookie 是存储于客户端的变量。每当同一台计算机通过浏览器请求某个页面时，就会发送这个 cookie给服务器。
+
+```html
+		<input type="text" name="username" id="js-ipt-username" />
+		<input type="button" id="js-btn-setname" value="set username in cookie" />
+		<p id="js-p-showname"></p>
+		<script>
+			var elP = document.getElementById('js-p-showname');
+			var elName = document.getElementById('js-ipt-username');
+			var elBtnCookie = document.getElementById('js-btn-setname');
+			elP.innerText = 'username: ' + getusername();
+			if(elBtnCookie.addEventListener) {
+				elBtnCookie.addEventListener('click', clickHandler);
+			} else {
+				elBtnCookie.attachEvent('onclick', clickHandler);
+			}
+			function clickHandler(event) {
+				var name = elName.value;
+				var exdate = new Date();
+				exdate.setDate(exdate.getDate() + 1);
+				document.cookie = 'username=' + name + ';expires=' + exdate.toGMTString();
+				console.log(exdate.toGMTString());
+				elP.innerText = 'username: ' + getusername();
+			}
+			function getusername() {
+				var name = ''
+				if(document.cookie.length > 0) {
+					console.log(document.cookie);
+					var start = document.cookie.indexOf('username=');
+					if(start != -1) {
+						start = start + 'username='.length;
+						var end = document.cookie.indexOf(';', start);
+						if(end == -1) {
+							end = document.cookie.length;
+						}
+						name = document.cookie.substring(start, end);
+					}
+				}
+				return name;
+			}	
+		</script>
+```
+
+<input type="text" name="username" id="js-ipt-username" />
+<input type="button" id="js-btn-setname" value="set username in cookie" />
+<p id="js-p-showname"></p>
+<script>
+	var elP = document.getElementById('js-p-showname');
+	var elName = document.getElementById('js-ipt-username');
+	var elBtnCookie = document.getElementById('js-btn-setname');
+	elP.innerText = 'username: ' + getusername();
+	if(elBtnCookie.addEventListener) {
+		elBtnCookie.addEventListener('click', clickHandler);
+	} else {
+		elBtnCookie.attachEvent('onclick', clickHandler);
+	}
+	function clickHandler(event) {
+		var name = elName.value;
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate() + 1);
+		document.cookie = 'username=' + name + ';expires=' + exdate.toGMTString();
+		console.log(exdate.toGMTString());
+		elP.innerText = 'username: ' + getusername();
+	}
+	function getusername() {
+		var name = ''
+		if(document.cookie.length > 0) {
+			console.log(document.cookie);
+			var start = document.cookie.indexOf('username=');
+			if(start != -1) {
+				start = start + 'username='.length;
+				var end = document.cookie.indexOf(';', start);
+				if(end == -1) {
+					end = document.cookie.length;
+				}
+				name = document.cookie.substring(start, end);
+			}
+		}
+		return name;
+	}	
+</script>
 
