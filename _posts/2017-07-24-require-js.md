@@ -56,7 +56,7 @@ RequireJS waits for all dependencies to load, figures out the right order in whi
 
 #### SCRIPT LOADING: WEB WORKERS
 
-Web Workers也可以用来加载脚本。
+Web Workers的importScripts函数也可以用来请求脚本文件。
 
 ##### 问题：
 
@@ -88,28 +88,26 @@ document.write() 可以用来加载脚本，可以跨域加载，也便于调试
 
 使用function wrappers来构造模块可以保证在执行代码前就获知其依赖。在依赖模块被加载并运行之后，才会运行工厂函数。
 
-```html
-		define(
-    		//The name of this module
-    		"types/Manager",
-
-    		//The array of dependencies
-    		["types/Employee"],
-
-    		//The function to execute when all dependencies have loaded. The
-    		//arguments to this function are the array of dependencies mentioned
-    		//above.
-    		function (Employee) {
-        		function Manager () {
-            		this.reports = [];
-        		}
-        		//This will now work
-        		Manager.prototype = new Employee();
-        		//return the Manager constructor function so it can be used by
-        		//other modules.
-       			return Manager;
-    		}
-		);
+```javascript
+        define(
+            //Thise name of this module
+            "types/Manager",
+            //The array of dependencies
+            ["types/Employee"],
+            //The function to execute when all dependencies have loaded. The
+            //arguments to this function are the array of dependencies mentioned
+            //above.
+            function (Employee) {
+                function Manager () {
+                    this.reports = [];
+                }
+                //This will now work
+                Manager.prototype = new Employee();
+                //return the Manager constructor function so it can be used by
+                //other modules.
+                return Manager;
+            }
+        );
 ```
 
 ##### RequireJS的基本思路就是用function wrappers来获知模块依赖，然后用HEAD.APPENDCHILD(SCRIPT)来异步加载模块。
@@ -126,14 +124,14 @@ define(id?, dependencies?, factory);
 
 The second argument, dependencies, is an array literal of the module ids that are dependencies required by the module that is being defined. The dependencies must be resolved prior to the execution of the module factory function, and the resolved values should be passed as arguments to the factory function with argument positions corresponding to indexes in the dependencies array.
 
-```html
-		define("alpha", ["require", "exports", "beta"], function (require, exports, beta) {
-       	exports.verb = function() {
-           	return beta.verb();
-           	//Or:
-           	return require("beta").verb();
-       	}
-   	});
+```javascript
+        define("alpha", ["require", "exports", "beta"], function (require, exports, beta) {
+        exports.verb = function() {
+            return beta.verb();
+            //Or:
+            return require("beta").verb();
+        }
+    });
 ```
 
 
