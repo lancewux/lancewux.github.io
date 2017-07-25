@@ -1,33 +1,5 @@
 <h1 align="center">REQUIRE JS</h1>
 
-RequireJS takes a different approach to script loading than traditional script tags. While it can also run fast and optimize well, the primary goal is to encourage modular code. 
-
-RequireJS loads scripts asynchronously and out of order for speed.
-
-data-main is only intended for use when the page just has one main entry point, the data-main script. For pages that want to do inline require() calls, it is best to nest those inside a require() call for the configuration
-
-```html
-		<script src="scripts/require.js"></script>
-		<script>
-			require(['scripts/config'], function() {
-    			// Configuration loaded now, safe to do other require calls
-    			// that depend on that config.
-    			require(['foo'], function(foo) {
-    				console.log('g');
-    			});
-			});
-		</script>
-```
-
-
-The function is not called until the my/cart and my/inventory modules have been loaded, and the function receives the modules as the "cart" and "inventory" arguments.
-
-
-If you define a circular dependency ("a" needs "b" and "b" needs "a"). "b" can fetch "a" later after modules have been defined by using the require() method.
-
-RequireJS waits for all dependencies to load, figures out the right order in which to call the functions that define the modules, then calls the module definition functions once the dependencies for those functions have been called. Note that the dependencies for a given module definition function could be called in any order, due to their sub-dependency relationships and network load order.
-
-
 下面的例子展示了在浏览器中使用JS模块加载的问题：
 
 ```html
@@ -110,7 +82,10 @@ document.write() 可以用来加载脚本，可以跨域加载，也便于调试
         );
 ```
 
-##### RequireJS的基本思路就是用function wrappers来获知模块依赖，然后用HEAD.APPENDCHILD(SCRIPT)来异步加载模块。
+RequireJS
+-
+
+使用function wrapper可以在执行代码前获取其依赖模块列表，使用HEAD.APPENDCHILD(SCRIPT)来异步加载依赖模块并运行依赖模块的代码，然后再执行本模块的代码，如果依赖模块还依赖其他模块，就递归执行前面的逻辑。
 
 
 AMD
@@ -134,6 +109,41 @@ The second argument, dependencies, is an array literal of the module ids that ar
     });
 ```
 
+SeaJS
+-
+
+使用define函数来定义模块，在执行代码前可以获取其依赖模块列表，使用webworker或者HEAD.APPENDCHILD(SCRIPT)来异步加载依赖模块，并缓存起来，继续异步加载并缓存依赖模块的依赖模块，直至所有的依赖模块都加载并缓存完成，在按照依赖顺序执行各个模块的代码。
+
+
+CMD
+-
+
+The Common Module Definition (CMD) API addresses how modules should be written in order to be interoperable in browser-based environment. 
+
+```javascript
+        define(function(require, exports, module) {
+
+  			// The module code goes here
+
+		});
+```
+
+RequireJS VS SeaJS
+-
+
+### 相同点：
+
+都是模块加载器
+
+### 不同点：
+
+- 定位有差异。RequireJS 想成为浏览器端的模块加载器，同时也想成为 Rhino / Node 等环境的模块加载器。Sea.js 则专注于 Web 浏览器端，同时通过 Node 扩展的方式可以很方便跑在 Node 环境中。
+
+- 插件机制不同。RequireJS 采取的是在源码中预留接口的形式，插件类型比较单一。Sea.js 采取的是通用事件机制，插件类型更丰富。
+
+- 执行模块代码的时机不一样。RequireJS加载完模块后就执行代码，所有依赖模块参数中的模块都会执行，且执行的顺序不确定。SeaJS加载完模块后会先缓存起来，等所有模块都加载完成后根据依赖关系依次执行缓存的代码，只有真正有需要使用时才执行代码，执行的顺序和依赖的顺序是一致的。
+
+- 寻找模块依赖的方式不一样。RequireJS主要靠define的第二个参数来获取依赖模块，而Sea.js主要通过正则匹配构造函数的require调用来获取依赖模块。
 
 ### Reference
 
