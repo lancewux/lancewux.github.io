@@ -1,4 +1,4 @@
-<h1 align="center">REQUIRE JS</h1>
+<h1 align="center">RequireJS VS SeaJS</h1>
 
 下面的例子展示了在浏览器中使用JS模块加载的问题：
 
