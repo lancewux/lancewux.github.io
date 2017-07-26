@@ -50,7 +50,7 @@ document.write() 可以用来加载脚本，可以跨域加载，也便于调试
 
 #### SCRIPT LOADING: HEAD.APPENDCHILD(SCRIPT)
 
-创建src为脚本的script标签，并appendchild到head。
+创建src为脚本的script标签，并appendchild到head。脚本会在把script元素插入到页面中的时候开始加载。加载是异步的，不会阻塞页面其他线程（比如渲染和其他脚本加载）。同时动态创建的多个script元素可以同步下载脚本。
 
 ##### 问题：
 
@@ -113,6 +113,8 @@ SeaJS
 -
 
 使用define函数来定义模块，在执行代码前可以获取其依赖模块列表，使用webworker或者HEAD.APPENDCHILD(SCRIPT)来异步加载依赖模块，并缓存起来，继续异步加载并缓存依赖模块的依赖模块，直至所有的依赖模块都加载并缓存完成，在按照依赖顺序执行各个模块的代码。
+
+Sea.js 在运行 define 时，接受 factory 参数，可以通过 factory.toString() 拿到源码，再通过正则匹配 require 的方式来得到依赖信息。由于 Sea.js 的这个实现原理，使得书写 CMD 模块代码时，必须遵守 require 书写约定，否则获取不到依赖数组，Sea.js 也就无法正确运行。
 
 
 CMD
