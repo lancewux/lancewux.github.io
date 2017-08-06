@@ -156,6 +156,11 @@ process.env.HOST = '0.0.0.0';
 
 <a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
 
+npm install --save react-router-native
+
+
+
+
 使用webpack-dev-server
 
 .eslintrc
