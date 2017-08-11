@@ -140,7 +140,7 @@ process.env.HOST = '0.0.0.0';
 "homepage": "/~wuliang/demo-react/build",
 ```
 
-在config/webpack.config.prod.js和config/webpack.config.dev.js的第93行加上，在项目中就可以使用绝对路径了
+在config/webpack.config.prod.js和config/webpack.config.dev.js的第93行加上以下配置，在项目中就可以使用绝对路径了
 
 ```javascript
 'src': path.join(__dirname, '../src'),
@@ -247,7 +247,7 @@ try {
 关于本demo
 -
 
-## 项目结构
+### 项目结构
 
 ```javscript
 .
@@ -302,6 +302,98 @@ try {
   |--README.md
 ```
 
+### 运行方式
+
+进入项目文件运行
+
+```bash
+npm install
+
+npm run start //调试
+
+npm run build //构建
+```
+### 实现功能
+
+- 组件化
+- 路由
+- redux全局状态管理
+- js文件合并打包
+- css和图片文件单独打包
+- webpack构建
+- 按需加载
+
+### 具体页面功能
+
+#### Home页面
+
+- props和state用法
+- html和js两种方式实现页面跳转
+- 生命周期钩子函数使用
+- 用ES6的class创建组件
+- jsx内加载图片
+- 事件绑定
+- 通过className实现样式控制
+- 使用base.css定义的样式
+
+#### Person页面
+
+- redux用法
+- css文件内加载图片
+- jsx行内设置样式
+- 用函数创建组件
+- 组件嵌套
+
+#### Comment页面
+
+- ajax
+- 表单操作
+
+使用本页面功能时，要先运行后台脚本。进入项目文件，输入下面的命令
+
+```bash
+node server/server.js
+```
+
+### 特别说明
+
+#### 路由
+
+使用browserHistory功能时，路由配置的path要加上发布路径，用process.env.PUBLIC_URL获得。
+
+可以在路由的时候实现按需加载。
+
+#### 静态图片加载
+
+本demo实现了三种静态图片加载的场景。
+
+在index.html文件加载图片，要把图片放到public文件夹里，然后用'%PUBLIC_URL%/'获得发布路径。
+
+在jsx内加载静态图片，要用require函数加载，可以使用配置好的绝对路径别名。
+
+在css文件内加载静态图片，不需要使用require函数，不能使用配置好的绝对路径别名。
+
+#### css文件
+
+css文件是单独引入和打包的，和组件没有耦合，所以和组件嵌套没关系，只要加载了，其设置的style就对任何组件有效。
+
+#### Redux
+
+Redux可以看做Flux的一种变体，处理数据流如下：
+
+```javascript
+
+                           --<-- dispatch Action --<---
+                           |                          |
+  dispatch Action ----> Reducer ------> Store ------> View
+
+```
+首先理解一下几个概念。state是指一个全局状态，可以理解为一个全局变量。store是state树，里面放置了很多个state，一个React App只能有一个store。Action是用来改变state的唯一方法，它虽然名为Action，但只是一个json对象，记录了改变state的相关信息。Reducer是连接Action和state的桥梁，Action只记录了信息，而Reducer则定义了改变state的具体实现。当dispacth 某个action时，reducer里面的所有实例都会执行，当switch匹配到这个action类型时，就执行case里的代码，从而改变state。state改变了就会触发React重新渲染组件。改变一个state并不是改变state的原值，而是返回一个新的state，即nextState。假如一个state是一个对象，那改变的state就是另一个对象，指向不同的内存空间，而不是在源对象的基础上修改。这种做法的原因是，React必须知道state改变前后的值，这样可以知道改变前后的虚拟DOM，通过比较虚拟DOM就可以找到重新渲染DOM的最优方法。
+
+并没有一个专门的state文件来定义state。reducer定义了state的名称，默认值和改变state的具体实现。然后用reducer来实例化store。reducer改变state是用的switch语句，case是Action类型，case后的代码就是改变state的相应代码，通过匹配action类型执行相应的动作来改变action指定的state。
+
+React好像没有提供全局注入变量的入口。state需要通过Provider容器来实现全局注入，然后通过connect函数把dispatch action和get state映射到组件里。用法参见<a src="http://https//github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">provider</a>
+
 
 相关参考资料
 -
@@ -314,43 +406,3 @@ try {
 
 <a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
 
-
-
-
-
-
-{
-  "name": "demo-react2",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8",
-    "react-scripts": "^1.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
-}
-
-
-    "babel-core": "6.25.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.0.0",
-    "babel-preset-react-app": "^3.0.1",
-    "babel-runtime": "6.23.0",
-
-
-    npm install --save-dev babel-plugin-transform-react-jsx
-
-    npm install --save-dev babel-preset-es2015 babel-preset-es2016
-
-    {
-	"presets": ["es2015", "es2016"]	
-}
-
-<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
