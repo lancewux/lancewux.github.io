@@ -1,47 +1,65 @@
 <h1 align="center">兼容IE8的React+Router+Redux+Webpack+ES6+AJAX全套解决方案</h1>
 
-从零开始创建一个简单的兼容IE8的React+Webpack工程
+Angular 1.x版本是个比较旧的东西了，比如依赖注入、自己独特的模块化，这些东西在ES6下已经很好地被解决了。AngularJS 1.3抛弃了对IE8的支持。Angular的2.0几乎是一个推翻重做的框架。
+
+React 15.x.x版本已经不支持IE8的DOM了，最后的支持版本为0.14.8，发布时间是2016.3.30，不算太过时，所以决定采用React v0.14.8来做。文档为<a src="http://react-ie8.xcatliu.com/react/index.html">react-ie8</a>。建议先看15版本的文档<a src="https://facebook.github.io/react/">react</a>，因为写得更好。
+
+React的定位是UI组件，所以做前端框架还要搭配其他插件来做，比如react-router, react-redux。
+
+首先说明怎么从零开始创建一个简单的兼容IE8的React+Webpack的工程，然后讲解本demo的用法和功能。
+
+从零开始
 -
 
-#### 安装脚手架命令行工具
+#### 创建React项目
+
+安装脚手架命令行工具
 
 sudo npm install -g create-react-app@1.0.3
 
-#### 用脚手架生成项目（会同时生成脚手架脚本）
+用脚手架生成项目（会同时生成脚手架脚本）
 
 create-react-app demo-react
 
-#### 进入项目
+进入项目
 
 cd demo-react
 
-#### 卸载最新版本的react
+卸载最新版本的react
 
 npm uninstall --save react react-dom
 
-#### 安装旧版本的react
+安装旧版本的react
 
 npm install --save react@0.14.8 react-dom@0.14.8
 
-#### 用脚手架脚本eject出配置文件，以便修改配置
+用脚手架脚本eject出配置文件，以便修改配置
 
 npm run eject
 
 #### 安装插件解决兼容性问题
 
+兼容ES6语法：
+
 npm install --save-dev babel-preset-es2015 babel-preset-es2016
+
+兼容ES5的各种函数：
 
 npm install --save es5-shim
 
+处理ES5对象定义没有冒号的问题：
+
 npm install --save es5to3-webpack-plugin
+
+处理require加载模块会引入defineProperty函数的问题：
 
 npm install --save-dev babel-plugin-add-module-exports 
 
-#### 安装插件支持jsx语法
+安装插件支持jsx语法
 
 npm install --save-dev babel-plugin-transform-react-jsx
 
-#### 在根目录下新建.eslintrc文件，写入以下配置内容
+在根目录下新建.eslintrc文件，写入以下配置内容
 
 ```javascript
 {
@@ -68,25 +86,45 @@ npm install --save-dev babel-plugin-transform-react-jsx
 }
 ```
 
-在package.json里加homepage属性，因为默认是根目录，修改成生成文件路径（用于build命令）
-
-"homepage": "/~wuliang/demo-react/build",
-
-在config/webpackDevServer.config.js文件的首行加上一行配置，以便非本机的网络也能访问devserver
-
-process.env.HOST = '0.0.0.0';
-
 在config/webpack.config.prod.js文件的第15行附件加上
 
+```javascript
 const ES5to3OutputPlugin = require("es5to3-webpack-plugin");
+```
 
 在第325行附件加上
 
+```javascript
 new ES5to3OutputPlugin(),
+```
 
-在config/webpack.config.prod.js和config/webpack.config.dev.js的第93行加上
+在public/index.html文件的head里加上一个meta设置，使IE浏览器以最新的标准模式渲染文本
 
+```html
+<meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9;IE=8;IE=7;" />
+```
+
+#### 打包配置
+
+在config/webpackDevServer.config.js文件的首行加上一行配置，以便非本机的网络也能访问devserver
+
+```javascript
+process.env.HOST = '0.0.0.0';
+```
+
+在package.json里加上homepage属性，默认是根目录，修改成发布文件路径（用于build命令）
+
+```javascript
+"homepage": "/~wuliang/demo-react/build",
+```
+
+在config/webpack.config.prod.js和config/webpack.config.dev.js的第93行加上，在项目中就可以使用绝对路径了
+
+```javascript
 'src': path.join(__dirname, '../src'),
+```
+
+#### 新建自己的代码文件
 
 删除src文件夹下的所有文件，并新建src/index.js文件，代码如下
 
@@ -141,26 +179,31 @@ ReactDOM.render(
 );
 ```
 
-运行npm run start命令使用devserver进行调试，用http://192.168.204.49:3000/访问
+运行npm run start命令使用devserver进行调试，用'http://192.168.204.49:3000/'（改成你自己的路径）访问
 
-运行npm run build命令build文件，用http://192.168.204.49/~wuliang/demo-react/build/访问
+运行npm run build命令来build文件，用'http://192.168.204.49/~wuliang/demo-react/build/'（改成你自己的路径）访问
 
-<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
+#### 路由
 
-路由
+如果想使用路由，就需要安装react-router，考虑兼容性建议使用2.x.x版本，用法参见<a src="https://github.com/ReactTraining/react-router/tree/v2.8.1/docs">React Router v2.8.1</a>
 
 npm install --save react-router@2.1.0
 
-全局状态管理
+#### 全局状态管理
+
+如果想使用全局状态管理，可以使用Redux，用法参见<a src="http://redux.js.org/docs/basics/UsageWithReact.html">UsageWithReact</a>。
 
 npm install --save redux@3.3.0
 
 npm install --save react-redux@4.4.0
 
+#### 异步请求
+
+官方推荐使用fetch函数，但是暂时解决不了在IE下的兼容性问题，所以用一个ajax插件<a src="https://github.com/ForbesLindesay/ajax">ForbesLindesay/ajax</a>
 
 npm install --save ForbesLindesay/ajax
 
-注释掉node_modules/component-ajax/index.js的catch里的两行代码，不然会编译出错
+注意，要注释掉node_modules/component-ajax/index.js的catch里的两行代码，不然会编译出错
 
 ```javascript
 var type
@@ -173,64 +216,28 @@ try {
 }
 ```
 
-在public/index.html文件的head里加上一下的meta设置，使IE浏览器以最新的标准模式渲染文本
+关于本demo
+-
 
-```html
-<meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9;IE=8;IE=7;" />
-```
+## 项目结构
 
-
-http://div.io/topic/1275
-
-https://github.com/fouber/blog/issues/6
-
-AngularJS是一套完整的框架
-
-AngularJS 1.3抛弃了对IE8的支持，但angularjs 1.2将继续支持IE8，但核心团队已经不打算在解决IE8及之前版本的问题上花时间。
-
-Angular 1.x版本其实是个比较旧的东西了，现在看来有些理念过时了，比如依赖注入、自己独特的模块化，这些东西其实在ES6下已经很好地被解决了。
-
-Angular的2.0几乎是一个推翻重做的框架
-
-React + Flux = ♥
-
-现在react@15.x.x版本已经放弃ie8。
-
-http://www.aliued.com/?p=3240
-
-http://react-ie8.xcatliu.com/
-
-
-"console-polyfill": "^0.2.2",
-    "core-js": "^2.0.2",
-    "es5-shim": "^4.4.1",
-    "es6-promise": "^3.0.2",
-    "fetch-ie8": "^1.4.0",
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8"
-
-    "es3ify-loader": "^0.1.0",
+.
+ |--.build
+ |--.babelrc
 
 
 
-npm install --save react-router-native
+相关参考资料
+-
 
+<a src="http://div.io/topic/1275">前端工程——基础篇</a>
 
+<a src="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a>
 
+<a src="http://www.aliued.com/?p=3240">react 项目的一个ie8兼容性问题</a>
 
-使用webpack-dev-server
+<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
 
-.eslintrc
-
-
-
-webpackDevServer.config.js
-加上
-
-
-
-
-run build之前要在package.json中加上默认路径
 
 
 
@@ -269,3 +276,5 @@ run build之前要在package.json中加上默认路径
     {
 	"presets": ["es2015", "es2016"]	
 }
+
+<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
