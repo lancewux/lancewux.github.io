@@ -221,10 +221,11 @@ try {
 
 ## 项目结构
 
+```javscript
 .
  |--.build
  |--.babelrc
-
+```
 
 
 相关参考资料
