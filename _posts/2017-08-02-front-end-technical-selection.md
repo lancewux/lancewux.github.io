@@ -1,4 +1,184 @@
-<h1 align="center">Technical selection</h1>
+<h1 align="center">兼容IE8的React+Router+Redux+Webpack+ES6+AJAX全套解决方案</h1>
+
+从零开始创建一个简单的兼容IE8的React+Webpack工程
+-
+
+#### 安装脚手架命令行工具
+
+sudo npm install -g create-react-app@1.0.3
+
+#### 用脚手架生成项目（会同时生成脚手架脚本）
+
+create-react-app demo-react
+
+#### 进入项目
+
+cd demo-react
+
+#### 卸载最新版本的react
+
+npm uninstall --save react react-dom
+
+#### 安装旧版本的react
+
+npm install --save react@0.14.8 react-dom@0.14.8
+
+#### 用脚手架脚本eject出配置文件，以便修改配置
+
+npm run eject
+
+#### 安装插件解决兼容性问题
+
+npm install --save-dev babel-preset-es2015 babel-preset-es2016
+
+npm install --save es5-shim
+
+npm install --save es5to3-webpack-plugin
+
+npm install --save-dev babel-plugin-add-module-exports 
+
+#### 安装插件支持jsx语法
+
+npm install --save-dev babel-plugin-transform-react-jsx
+
+#### 在根目录下新建.eslintrc文件，写入以下配置内容
+
+```javascript
+{
+  "rules": {
+    "react/no-deprecated": 0,
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "jsx": true,
+        "modules": true
+      }
+  }
+}
+```
+在根目录下新建.babelrc文件，写入以下配置内容
+
+```javascript
+{
+  "plugins": ["transform-react-jsx", "add-module-exports"],
+  "presets": ["es2015", "es2016"]
+}
+```
+
+在package.json里加homepage属性，因为默认是根目录，修改成生成文件路径（用于build命令）
+
+"homepage": "/~wuliang/demo-react/build",
+
+在config/webpackDevServer.config.js文件的首行加上一行配置，以便非本机的网络也能访问devserver
+
+process.env.HOST = '0.0.0.0';
+
+在config/webpack.config.prod.js文件的第15行附件加上
+
+const ES5to3OutputPlugin = require("es5to3-webpack-plugin");
+
+在第325行附件加上
+
+new ES5to3OutputPlugin(),
+
+在config/webpack.config.prod.js和config/webpack.config.dev.js的第93行加上
+
+'src': path.join(__dirname, '../src'),
+
+删除src文件夹下的所有文件，并新建src/index.js文件，代码如下
+
+```html
+/**
+ * CANNOT use `import` to import `es5-shim`,
+ * because `import` will be transformed to `Object.defineProperty` by babel,
+ * `Object.defineProperty` doesn't exists in IE8,
+ * (but will be polyfilled after `require('es5-shim')` executed).
+*/
+//  es5-shim.js是给Javascript engine打补丁的, 所以必须最先加载。
+//  es5-shim 如实地模拟EcmaScript 5的函数，比如Array.prototype.forEach；而es5-sham是尽可能地模拟EcmaScript 5的函数，比如 Object.create
+require('es5-shim');
+require('es5-shim/es5-sham');
+
+/**
+ * CANNOT use `import` to import `react` or `react-dom`,
+ * because `import` will run `react` before `require('es5-shim')`.
+*/
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+
+const React = require('react');
+const ReactDOM = require('react-dom');
+
+const Timer = React.createClass({
+  getInitialState: function () {
+    return {secondsElapsed: 0}
+  },
+  tick: function () {
+    this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+  },
+  componentDidMount: function () {
+    this.interval = setInterval(this.tick, 1000);
+  },
+  componentWillUnmount: function () {
+    clearInterval(this.interval);
+  },
+  render: function() {
+    return (
+      <div>
+        <h3>welcome {this.props.name}</h3>
+        <h3>Time Elapsed: {this.state.secondsElapsed} seconds.</h3>
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+    <Timer name="Jone"/>,
+    document.getElementById('root')
+);
+```
+
+运行npm run start命令使用devserver进行调试，用http://192.168.204.49:3000/访问
+
+运行npm run build命令build文件，用http://192.168.204.49/~wuliang/demo-react/build/访问
+
+<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
+
+路由
+
+npm install --save react-router@2.1.0
+
+全局状态管理
+
+npm install --save redux@3.3.0
+
+npm install --save react-redux@4.4.0
+
+
+npm install --save ForbesLindesay/ajax
+
+注释掉node_modules/component-ajax/index.js的catch里的两行代码，不然会编译出错
+
+```javascript
+var type
+try {
+  type = require('type-of')
+} catch (ex) {
+  //hide from browserify
+  // var r = require
+  // type = r('type')
+}
+```
+
+在public/index.html文件的head里加上一下的meta设置，使IE浏览器以最新的标准模式渲染文本
+
+```html
+<meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9;IE=8;IE=7;" />
+```
+
 
 http://div.io/topic/1275
 
@@ -31,130 +211,7 @@ http://react-ie8.xcatliu.com/
 
     "es3ify-loader": "^0.1.0",
 
-安装脚手架命令行工具
 
-sudo npm install -g create-react-app
-
-用脚手架生成项目（会同时生成脚手架脚本）
-
-create-react-app demo-react
-
-进入项目
-
-cd demo-react
-
-卸载最新版本的react和脚手架脚本
-
-npm uninstall --save react react-dom react-scripts
-
-安装旧版本的react和脚手架脚本
-
-npm install --save react@0.14.8 react-dom@0.14.8 react-scripts@1.0.1
-
-用脚手架脚本eject出配置文件，以便修改配置
-
-npm run eject
-
-安装es5-shim以解决es5兼容性问题
-
-npm install --save es5-shim
-
-安装插件支持jsx语法
-
-npm install --save-dev babel-plugin-transform-react-jsx
-
-在根目录下新建.eslintrc文件，写入以下配置内容
-
-```javascript
-		{
-			"rules": {
-				"react/no-deprecated": 0,
-			},
-			"parserOptions": {
-				"ecmaVersion": 6,
-   				"sourceType": "module",
-   				"ecmaFeatures": {
-    				"experimentalObjectRestSpread": true,
-    				"jsx": true,
-    				"modules": true
-  				}
-			}
-		}
-```
-在根目录下新建.babelrc文件，写入以下配置内容
-
-```javascript
-		{
-			"plugins": ["transform-react-jsx"]
-		}
-```
-
-在package.json里加homepage属性，因为默认是根目录，修改成生成文件路径（用于build命令）
-
-"homepage": "http://www.wuliang-hwtrip.com/~wuliang/demo-react/build"
-
-在config/webpackDevServer.config.js文件的首行加上一行配置，以便非本机的网络也能访问devserver
-
-process.env.HOST = '0.0.0.0';
-
-删除src文件夹下的所有文件，并新建src/index.js文件，代码如下
-
-```html
-		/**
- 		* CANNOT use `import` to import `es5-shim`,
- 		* because `import` will be transformed to `Object.defineProperty` by babel,
- 		* `Object.defineProperty` doesn't exists in IE8,
- 		* (but will be polyfilled after `require('es5-shim')` executed).
- 		*/
-		//  es5-shim.js是给Javascript engine打补丁的, 所以必须最先加载。
-		//  es5-shim 如实地模拟EcmaScript 5的函数，比如Array.prototype.forEach；而es5-sham是尽可能地模拟EcmaScript 5的函数，比如 Object.create
-		require('es5-shim');
-		require('es5-shim/es5-sham');
-
-		/**
- 		* CANNOT use `import` to import `react` or `react-dom`,
- 		* because `import` will run `react` before `require('es5-shim')`.
- 		*/
-		// import React from 'react';
-		// import ReactDOM from 'react-dom';
-
-		const React = require('react');
-		const ReactDOM = require('react-dom');
-
-		const Timer = React.createClass({
-			getInitialState: function () {
-				return {secondsElapsed: 0}
-			},
-			tick: function () {
-				this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-			},
-			componentDidMount: function () {
-				this.interval = setInterval(this.tick, 1000);
-			},
-			componentWillUnmount: function () {
-				clearInterval(this.interval);
-			},
-			render: function() {
-				return (
-					<div>
-						<h3>welcome {this.props.name}</h3>
-						<h3>Time Elapsed: {this.state.secondsElapsed} seconds.</h3>
-					</div>
-				);
-			}
-		});
-
-		ReactDOM.render(
-  			<Timer name="Jone"/>,
-  			document.getElementById('root')
-		);
-```
-
-运行npm run start命令使用devserver进行调试，用http://192.168.204.49:3000/访问
-
-运行npm run build命令build文件，用http://192.168.204.49/~wuliang/demo-react/build/访问
-
-<a src="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
 
 npm install --save react-router-native
 
@@ -207,7 +264,7 @@ run build之前要在package.json中加上默认路径
 
     npm install --save-dev babel-plugin-transform-react-jsx
 
-    npm install --save-dev babel-preset-es2015
+    npm install --save-dev babel-preset-es2015 babel-preset-es2016
 
     {
 	"presets": ["es2015", "es2016"]	
