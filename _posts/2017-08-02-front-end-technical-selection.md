@@ -15,7 +15,9 @@ React的定位是UI组件，所以做前端框架还要搭配其他插件来做�
 
 安装脚手架命令行工具
 
+```bash
 sudo npm install -g create-react-app@1.0.3
+```
 
 用脚手架生成项目（会同时生成脚手架脚本）
 
