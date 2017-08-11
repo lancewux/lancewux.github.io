@@ -21,45 +21,65 @@ sudo npm install -g create-react-app@1.0.3
 
 用脚手架生成项目（会同时生成脚手架脚本）
 
+```bash
 create-react-app demo-react
+```
 
 进入项目
 
+```bash
 cd demo-react
+```
 
 卸载最新版本的react
 
+```bash
 npm uninstall --save react react-dom
+```
 
 安装旧版本的react
 
+```bash
 npm install --save react@0.14.8 react-dom@0.14.8
+```
 
 用脚手架脚本eject出配置文件，以便修改配置
 
+```bash
 npm run eject
+```
 
 #### 安装插件解决兼容性问题
 
 兼容ES6语法：
 
+```bash
 npm install --save-dev babel-preset-es2015 babel-preset-es2016
+```
 
 兼容ES5的各种函数：
 
+```bash
 npm install --save es5-shim
+```
 
 处理ES5对象定义没有冒号的问题：
 
+```bash
 npm install --save es5to3-webpack-plugin
+```
 
 处理require加载模块会引入defineProperty函数的问题：
 
-npm install --save-dev babel-plugin-add-module-exports 
+```bash
+npm install --save-dev babel-plugin-add-module-exports
+```
 
 安装插件支持jsx语法
 
+```bash
 npm install --save-dev babel-plugin-transform-react-jsx
+```
 
 在根目录下新建.eslintrc文件，写入以下配置内容
 
@@ -189,21 +209,27 @@ ReactDOM.render(
 
 如果想使用路由，就需要安装react-router，考虑兼容性建议使用2.x.x版本，用法参见<a src="https://github.com/ReactTraining/react-router/tree/v2.8.1/docs">React Router v2.8.1</a>
 
+```bash
 npm install --save react-router@2.1.0
+```
 
 #### 全局状态管理
 
 如果想使用全局状态管理，可以使用Redux，用法参见<a src="http://redux.js.org/docs/basics/UsageWithReact.html">UsageWithReact</a>。
 
+```bash
 npm install --save redux@3.3.0
 
 npm install --save react-redux@4.4.0
+```
 
 #### 异步请求
 
 官方推荐使用fetch函数，但是暂时解决不了在IE下的兼容性问题，所以用一个ajax插件<a src="https://github.com/ForbesLindesay/ajax">ForbesLindesay/ajax</a>
 
+```bash
 npm install --save ForbesLindesay/ajax
+```
 
 注意，要注释掉node_modules/component-ajax/index.js的catch里的两行代码，不然会编译出错
 
@@ -225,8 +251,55 @@ try {
 
 ```javscript
 .
- |--.build
- |--.babelrc
+  |--build                                  // 打包输出文件
+  |--config                                 // 构建配置文件
+    |--jest
+    |--env.js
+    |--paths.js
+    |--polyfill.js
+    |--webpack.config.dev.js
+    |--webpack.config.prod.js
+    |--webpackDevServer.config.js
+  |--public                                 // 构建公开文件，里面的文件在打包时会被自动复制到build文件夹
+    |--index.html                           // 构建用的模板文件，生成的js代码会挂载在这里
+    |--favicon.ico
+    |--manifest.json
+  |--script                                 // 构建脚本文件
+    |--start.js
+    |--build.js
+    |--test.js
+  |--src                                    // 项目代码文件
+    |--api                                  // 公用api文件
+    |--components                           // 组件
+      |--person
+        |--AddPerson.jsx
+        |--PersonList.jsx
+        |--FilterItem.jsx
+        |--FilterBar.jsx
+    |--pages                                // 页面
+      |--Home.jsx
+      |--Person.jsx
+      |--Comment.jsx
+    |--redux                                // redux文件
+      |--actionCreators.js
+      |--reducers.js
+      |--store.js
+    |--router                               // 路由文件
+      |--index.jsx
+    |--static                               // 静态文件
+      |--css
+        |--base.css
+        |--home.css
+        |--person.css
+        |--comment.css
+      |--media
+        |--katon.jpg
+    |--index.jsx                             // 打包入口文件
+  |--.babelrc                                // babel配置文件
+  |--.eslintrc                               // eslint配置文件
+  |--.gitignore                              // git忽略上传文件配置
+  |--package.json                            // npm包管理信息文件
+  |--README.md
 ```
 
 
