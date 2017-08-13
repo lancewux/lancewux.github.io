@@ -80,6 +80,53 @@ while(new Date().getTime() < now + 1000) {
 process.nextTick和setImmediate
 -
 
+```javascript
+setImmediate(() => {
+  console.log('immediate');
+});
+setTimeout(() => {
+  console.log('timeout');
+}, 0);
+// 顺序不确定
+```
+
+```javascript
+const fs = require('fs');
+fs.readFile('./data.json', () => {
+  setTimeout(() => {
+    console.log('timeout');
+  }, 0);
+  setImmediate(() => {
+    console.log('immediate');
+  });
+});
+//immediate timeout
+```
+
+```javascript
+setImmediate(() => {
+  console.log('immediate');
+});
+setTimeout(() => {
+  console.log('timeout');
+}, 0);
+console.log('end');
+// end timeout immediate
+```
+
+```javascript
+fs.readFile('./data.json', () => {
+  setTimeout(() => {
+    console.log('timeout');
+  }, 0);
+  setImmediate(() => {
+    console.log('immediate');
+  });
+  console.log('end');
+});
+//end immediate timeout
+```
+
 process.nextTick方法在当前"执行栈"的尾部----下一次Event Loop（主线程读取"任务队列"）之前----添加回调函数。setImmediate方法则是在当前"任务队列"的尾部添加事件，与setTimeout(fn, 0)很像。
 
 ```javascript
@@ -111,3 +158,12 @@ console.log(3);
 <a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a>
 
 <a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
+
+http://www.journaldev.com/7462/node-js-architecture-single-threaded-event-loop
+
+https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
+
+https://stackoverflow.com/questions/10680601/nodejs-event-loop
+
+https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish
+
