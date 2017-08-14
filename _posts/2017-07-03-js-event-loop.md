@@ -80,39 +80,7 @@ while(new Date().getTime() < now + 1000) {
 process.nextTick和setImmediate
 -
 
-```javascript
-setImmediate(() => {
-  console.log('immediate');
-});
-setTimeout(() => {
-  console.log('timeout');
-}, 0);
-// 顺序不确定
-```
 
-```javascript
-const fs = require('fs');
-fs.readFile('./data.json', () => {
-  setTimeout(() => {
-    console.log('timeout');
-  }, 0);
-  setImmediate(() => {
-    console.log('immediate');
-  });
-});
-//immediate timeout
-```
-
-```javascript
-setImmediate(() => {
-  console.log('immediate');
-});
-setTimeout(() => {
-  console.log('timeout');
-}, 0);
-console.log('end');
-// end timeout immediate
-```
 
 ```javascript
 fs.readFile('./data.json', () => {
@@ -167,3 +135,71 @@ https://stackoverflow.com/questions/10680601/nodejs-event-loop
 
 https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish
 
+https://www.quora.com/What-provides-the-event-loop-in-node-js-v8-or-libuv
+
+http://docs.libuv.org/en/v1.x/design.html
+
+libuv是一个跨平台的的事件驱动异步I/O模型库
+
+<p align="center"><img src="/images/posts/2017-07-03/libuvdiagram.jpg" /></p>
+
+上层主要包括 Network I/O， File I/O， DNS Ops.，User code。Network I/O是在非阻塞的Socket上运行的，都是在一个单线程里运行的，即event loop线程。file I/O是在thread pool上运行的，也就是说是通过多线程处理的。
+
+不同平台用不同poll策略，epoll on Linux, kqueue on OSX and other BSDs, event ports on SunOS and IOCP on Windows。
+
+libuv的event loop是意图用单线程运行的。也可以同时在不同的线程上运行多个event loop，但是event loop是非线程安全（not thread-safe）的。
+
+<p align="center"><img src="/images/posts/2017-07-03/libuveventloop.jpg" /></p>
+
+当Node.js时，先初始化event loop，运行提供的入口脚本，然后开始event loop。
+
+注意，在poll for I/O的时候，整个loop会blocking一段时间，时间可能为零，可能为最近的定时器时间，或者无穷。
+
+setImmediate(cb1())的cb1()是在Run check handles阶段执行的。
+
+对于example 1，event loop 从update loop time进入，然后Run due timers，这个时候定时间有可能到时，也有可能没到时，取决于计算机的性能，所以console.log('timeout')不一定会运行。然后一直往下运行到Run check handles，运行console.log('immediate')。所以先后顺序不确定。
+
+对于example 2，由于在setTimeOut()后多执行了一条语句，所以进入Run due timers阶段时，定时器一定会到时，会运行console.log('timeout')。
+
+对于example 3，由于代码是在File I/O的callback里，可能在Call pending callbacks或Poll for I/O阶段执行，然后会进入Run check handles，执行console.log('immediate')，再进入Run due timers执行console.log('timeout')
+
+
+example 1：
+
+```javascript
+setImmediate(() => {
+  console.log('immediate');
+});
+setTimeout(() => {
+  console.log('timeout');
+}, 0);
+// 顺序不确定
+```
+example 2：
+
+```javascript
+setImmediate(() => {
+  console.log('immediate');
+});
+setTimeout(() => {
+  console.log('timeout');
+}, 0);
+console.log('end');
+// end timeout immediate
+```
+example 3：
+
+```javascript
+const fs = require('fs');
+fs.readFile('./data.json', () => {
+  setTimeout(() => {
+    console.log('timeout');
+  }, 0);
+  setImmediate(() => {
+    console.log('immediate');
+  });
+});
+//immediate timeout
+```
+
+process.nextTick(cb3())与event loop所在的执行阶段无关，只要当前操作执行完成，就会执行cb3()。所以process.nextTick()的回调函数比setImmediate()和setImmediate()的回调函数都要先执行。
