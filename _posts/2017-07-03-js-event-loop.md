@@ -80,8 +80,6 @@ while(new Date().getTime() < now + 1000) {
 process.nextTick和setImmediate
 -
 
-
-
 ```javascript
 fs.readFile('./data.json', () => {
   setTimeout(() => {
@@ -192,3 +190,4 @@ fs.readFile('./data.json', () => {
 ```
 
 process.nextTick(cb3())与event loop所在的执行阶段无关，只要当前操作执行完成，就会执行cb3()。所以process.nextTick()的回调函数比setImmediate()和setImmediate()的回调函数都要先执行。
+
