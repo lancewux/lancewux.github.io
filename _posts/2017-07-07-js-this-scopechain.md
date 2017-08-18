@@ -107,7 +107,7 @@ this对象
 			obj.fn2(); //3 (this = obj)
 			obj.fn3()(); //2 (闭包)
 			obj.fn4()(); //1 (this = window)
-			o.fn1(); //1 (搜索至window作用域)
+			o.fn1(); //1 (搜索至window作用域，类似于闭包)
 			o.fn2(); //4 (this = o)
 		</script>
 ```

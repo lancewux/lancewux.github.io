@@ -100,10 +100,10 @@ call的参数是一个个传入的，而apply的参数是一数组的方式传�
 ```html
 		<script>
 			Function.prototype.bind = function(context){
-				var args = Array.prototype.slice(arguments, 1),
+				var args = Array.prototype.slice.call(arguments, 1),
 				F = function(){}, //中转构造函数F，使绑定后的函数与调用bind()的函数处于同一原型链上
 				self = this, //保存this，即调用bind方法的目标函数
-				bound = function(){ //函数柯里化的情况
+				var bound = function(){ //函数柯里化的情况
 					var innerArgs = Array.prototype.slice.call(arguments);
 					var finalArgs = args.concat(innerArgs);
 					return self.apply((this instanceof F ? this : context), finalArgs);

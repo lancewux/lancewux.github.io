@@ -109,17 +109,6 @@ console.log(3);
 // 3 1 2 TIMEOUT
 ```
 
-```javascript
-setImmediate(function A() {
-  console.log(1);
-  setImmediate(function B(){console.log(2);});
-});
-setTimeout(function timeout() {
-  console.log('TIMEOUT');
-}, 0);
-console.log(3);
-//3 1 TIMEOUT 2 (理论值，实际上可能为 3 TIMEOUT 1 2)
-```
 
 ### Reference
 
