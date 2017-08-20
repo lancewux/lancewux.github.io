@@ -1,3 +1,7 @@
+<h1 align="center">排序算法</h1>
+
+<p align="center"><img src="/images/posts/2017-08-18/sort.png" /></p>
+
 
 ```javascript
 const arr = [19, 1, 5, 7, 4, 3, 9, 15, 51, 7];
@@ -207,3 +211,7 @@ const arr = [19, 1, 5, 7, 4, 3, 9, 15, 51, 7];
 			}
 
 ```
+
+http://blog.csdn.net/hguisu/article/details/7776068/
+
+
