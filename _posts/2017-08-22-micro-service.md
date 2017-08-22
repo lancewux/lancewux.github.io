@@ -7,3 +7,5 @@ http://www.gartner.com/technology/research/methodologies/hype-cycle.jsp
 https://www.nginx.com/solutions/api-gateway/
 
 http://microservices.io/
+
+https://www.nginx.com/blog/introduction-to-microservices/
