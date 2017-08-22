@@ -62,3 +62,19 @@ CSS float 属性
 #### style="position: absolute; width: 100px; height: 80px; left: 50%; top: 50%; margin-left: -50px; margin-top: -40px;"
 
 父元素设置style="position: relative; "; 能实现任何元素的垂直居中。
+
+
+其它
+-
+
+### display:none vs visible:hidden
+
+display:none和visible:hidden都能把网页上某个元素隐藏起来。
+
+display:none ---不为被隐藏的对象保留其物理空间，即该对象在页面上彻底消失。
+
+visible:hidden--- 使对象在网页上不可见，但该对象在网页上所占的空间没有改变。
+
+参考资料
+
+<a href="http://www.cnblogs.com/suncj/p/4056380.html">display and visible</a>

@@ -9,8 +9,14 @@ Session是在服务端保存的一个数据结构，用来跟踪用户的状态�
 
 #### cookie
 
-存储在用户本地终端上的数据。大小不能超过4k。可以设置其过期时间，会被同源的http请求携带。一般用来进行session跟踪
+存储在用户本地终端上的数据。可以设置其过期时间，会被同源的http请求携带。一般用来进行session跟踪
 ，比如判断用户是否已登陆。
+
+一个浏览器能创建的 Cookie 数量最多为 300 个，并且每个不能超过 4KB，每个 Web 站点能设置的 Cookie 总数不能超过 20 个。
+
+给HTTP Cookie设置HttpOnly，在浏览器的document对象中就看不到cookie了，而浏览器在浏览网页的时候不受任何影响。
+
+给HTTP Cookie设置secure，该cookie只能在HTTPS通道下被写入浏览器。
 
 如果浏览器禁用cookie，继续使用session的方法有两种，URL重写和表单隐藏字段。URL重写技术把session id直接附加在URL路径的后面，表单隐藏字段技术把session id写到表单的隐藏字段中，然后发给服务器。
 

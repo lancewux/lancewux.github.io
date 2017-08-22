@@ -18,6 +18,8 @@ Redirection
 
 301 Moved Permanently
 
+302 Move temporarily
+
 304 Not Modified
 
 307 Temporary Redirect
@@ -44,3 +46,8 @@ Server Error
 
 504 Gateway Timeout
 
+
+参考资料
+-
+
+<a href="https://baike.baidu.com/item/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/5053660?fr=aladdin#3_2">HTTP状态码</a>
