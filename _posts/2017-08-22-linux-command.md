@@ -10,9 +10,33 @@
 
 #### du -bk a.js
 
-以KB为单位显示 a.js的大小
+以KB为单位显示a.js文件的大小
+
+#### lscpu
+
+查看的是cpu的统计信息
+
+#### free -m
+
+以兆为单位显示cpu内存使用情况
+
+#### ifconfig
+
+#### tcpdump
+
+#### netstat
+
+#### ps -ef | grep
 
 #### ln source dest
+
+#### pwd
+
+#### tar zxvf FileName.tar.gz
+
+#### ./config; make; make install
+
+#### rz
 
 建立硬链接。
 
@@ -23,3 +47,5 @@
 建立软链接。
 
 把符号链接称为软链接，它是指向另一个文件的特殊文件，这种文件的数据部分仅包含它所要链接文件的路径名。软件有自己的inode，并在磁盘上有一小片空间存放路径名。因此，软链接能够跨文件系统，也可以和目录链接！
+
+#### ssh -T -v git@github.com

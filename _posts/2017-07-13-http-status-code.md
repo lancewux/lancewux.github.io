@@ -35,6 +35,8 @@ Client Error
 
 404 Not Found
 
+407 Proxy Authentication Required
+
 Server Error 
 -
 
