@@ -21,8 +21,14 @@ console.log(typeof b); //'undefined'
 console.log(b); //'Uncaught ReferenceError'
 
 console.log(null == undefined); //true
-console.log(null == false); //false
+console.log(null == false || undefined == false); //false
 
+var b = null || undefined ? 1 : 2; //强制类型转换成boolean
+console.log(b); //2
 
 ```
+
+'==' vs '==='
+-
+
 
