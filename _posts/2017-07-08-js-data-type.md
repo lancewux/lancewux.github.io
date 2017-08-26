@@ -4,6 +4,8 @@ ES5有7种数据类型：字符串、数字、布尔、数组、对象、Null、
 
 5 种原始类型（primitive type），即 Undefined、Null、Boolean、Number 和 String。
 
+基础类型是值传递, 通过将基础类型包装 (boxing) 可以以引用的方式传递
+
 ```javascript
 console.log(typeof undefined); //'undefined'
 console.log(typeof null); //'object'

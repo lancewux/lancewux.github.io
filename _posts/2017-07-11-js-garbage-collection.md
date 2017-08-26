@@ -54,6 +54,8 @@ IE9之前的版本的BOM和DOM对象不是原生Javascript对象，采用的是�
 		</script>
 ```
 
+https://segmentfault.com/a/1190000004896090
+
 性能问题
 -
 
@@ -65,3 +67,35 @@ IE9之前的版本的BOM和DOM对象不是原生Javascript对象，采用的是�
 虽然Javascript会自己管理内存。但是开发人员也要注意优化内存占用。出于安全考虑，操作系统分配给Web浏览器的内存是偏少的，有限制的。内存限制问题会影响给变量分配内存，调用栈，和一个线程中同时执行的语句数量。
 
 优化内存占用的最佳方式，就是只为执行中的代码保存必要的数据。把不再使用的变量设置为null，从而解除引用(dereferencing)。这一方法适用于大多数全局变量和全局对象的属性。
+
+V8 GC
+-
+
+Garbage collection就是回收不再使用的内存的进程。分配内存容易，回收内存难。
+
+垃圾回收简化了编程，减少了错误和内存泄漏，甚至提高了少数应用的性能。垃圾回收器剥夺了内存控制权，程序员几乎无法操控内存。
+
+自带垃圾回收的语言和没有管理内存的语言之间的性能没有绝对的优劣之分。
+
+Reference counting被吹捧为垃圾回收的替代品，但是它也有不少问题。
+
+垃圾回收器要解决的问题<a href="http://jayconrod.com/posts/55/a-tour-of-v8-garbage-collection">a-tour-of-v8-garbage-collection</a>：
+
+- 区分指针和数据
+- 识别内存死区，即可以被回收的内存空间
+
+当一个对象不能在被根节点使用到的时候，就会成为gc的候选者。即不被根对象（root object）或活动对象（active object）引用。根对象可以是全局对象，DOM元素，或局部变量。
+
+当一个对象能被一个定义的活的对象通过指针链获取的时候，它就是活的，否则就是垃圾。
+
+v8使用了一种stop-the-world回收机制，即当回收器工作时，所有程序停止运行。
+
+堆区（heap）主要分为两段：New Space和Old Space。New Space是分配新内存发生的地方，大小为1-8MBs，回收内存比较快，比较频繁，使用Scavenge collection回收算法。Old Space是对象没有被gc回收后提升到的地方，这里分配内存快，但是回收慢，只有在耗尽时才会开始内存回收工作，使用Mark-Sweep collection回收算法。
+
+
+https://blog.risingstack.com/finding-a-memory-leak-in-node-js/
+
+https://blog.risingstack.com/node-js-at-scale-node-js-garbage-collection/?utm_source=nodeweekly&utm_medium=email
+
+
+
