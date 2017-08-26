@@ -24,9 +24,9 @@
 
 #### tcpdump
 
-#### netstat
+#### netstat -anp | grep 808
 
-#### ps -ef | grep
+#### ps -aux | grep tomcat 
 
 #### ln source dest
 
