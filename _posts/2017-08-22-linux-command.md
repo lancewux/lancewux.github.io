@@ -16,6 +16,8 @@
 
 查看的是cpu的统计信息
 
+#### lsb_release -a
+
 #### free -m
 
 以兆为单位显示cpu内存使用情况
@@ -23,6 +25,10 @@
 #### ifconfig
 
 #### tcpdump
+
+#### dig
+
+dig的全称是 (domain information groper)。它是一个用来灵活探测DNS的工具。它会打印出DNS name server的回应。
 
 #### netstat -anp | grep 808
 
@@ -36,7 +42,10 @@
 
 #### ./config; make; make install
 
-#### rz
+#### rz lrz
+
+#### tee
+
 
 建立硬链接。
 
@@ -49,3 +58,9 @@
 把符号链接称为软链接，它是指向另一个文件的特殊文件，这种文件的数据部分仅包含它所要链接文件的路径名。软件有自己的inode，并在磁盘上有一小片空间存放路径名。因此，软链接能够跨文件系统，也可以和目录链接！
 
 #### ssh -T -v git@github.com
+
+
+
+<a href="http://roclinux.cn/?p=2449" target="blank">dig挖出DNS的秘密</a>
+
+<a href="http://charlee.li/linux-sysinfo-cmds.html" target="blank">Linux系统信息查看命令大全</a>
