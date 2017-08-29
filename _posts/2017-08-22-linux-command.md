@@ -32,7 +32,7 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### netstat -anp | grep 808
 
-#### ps -aux | grep tomcat 
+#### ps -ef | grep tomcat 
 
 #### ln source dest
 
