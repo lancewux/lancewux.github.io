@@ -13,7 +13,7 @@ EOL
 换行符 (EOL) 通常由 line feed (LF, \\n) 和 carriage return (CR, \\r) 组成. 常见的情况:
 
 |符号|系统|
-|:-|:-|
+|:--|:----|
 |LF|在 Unix 或 Unix 相容系统 (GNU/Linux, AIX, Xenix, Mac OS X, ...)、BeOS、Amiga、RISC OS|
 |CR+LF|MS-DOS、微软视窗操作系统 (Microsoft Windows)、大部分非 Unix 的系统|
 |CR|Apple II 家族, Mac OS 至版本9|
