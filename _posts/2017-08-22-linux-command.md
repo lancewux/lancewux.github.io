@@ -46,6 +46,7 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### tee
 
+#### curl wget
 
 建立硬链接。
 
