@@ -53,7 +53,7 @@ B树
 3. 除根结点以外的所有结点（不包括叶子结点）的度数正好是关键字总数加1，故内部子树个数 k 满足：┌m/2┐ <= k <= m ；
 4. 所有的叶子结点都位于同一层。
 
-<p align="center"><img src="/images/posts/2017-08-31/btree.jpg" /></p>
+<p align="center"><img src="/images/posts/2017-08-31/bmitree.jpg" /></p>
 
 B+树
 -
@@ -66,14 +66,14 @@ B+树是应文件系统所需而出的一种B-树的变型树。一棵m阶的B+�
 
 通常在B+树上有两个头指针，一个指向根结点，一个指向关键字最小的叶子结点。
 
-<p align="center"><img src="/images/posts/2017-08-31/bptree.jpg" /></p>
+<p align="center"><img src="/images/posts/2017-08-31/bpltree.jpg" /></p>
 
 B*数
 -
 
 是B+树的变体，在B+树的非根和非叶子结点再增加指向兄弟的指针；
 
-<p align="center"><img src="/images/posts/2017-08-31/batree.jpg" /></p>
+<p align="center"><img src="/images/posts/2017-08-31/bastree.jpg" /></p>
 
 
 线索二叉树
