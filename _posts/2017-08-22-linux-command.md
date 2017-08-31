@@ -60,6 +60,16 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### ssh -T -v git@github.com
 
+#### who i am
+
+查看自己的登陆信息
+
+#### w
+
+查看所有的登陆用户信息
+
+
+
 
 
 <a href="http://roclinux.cn/?p=2449" target="blank">dig挖出DNS的秘密</a>
