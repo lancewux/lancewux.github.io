@@ -23,3 +23,9 @@ Key Authorization
 -
 
 根据用户生成key：secret的秘钥对，key和secret都是UUID，即通用唯一识别码 (Universally Unique Identifier)。
+
+OAuth 2.0
+-
+
+
+
