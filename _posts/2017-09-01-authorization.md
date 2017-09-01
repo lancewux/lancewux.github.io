@@ -7,7 +7,7 @@ HTTP基本认证是指Web浏览器或其他客户端程序发送请求时提供�
 
 Base64算法编码（username：password ）
 
-例如，用户名是: admin，口令是: admin123，拼接后的结果是: admin:admin123，然后再用Base64编码，得到YWRtaW46YWRtaW4xMjM=。
+例如，用户名是: admin，口令是: admin123，拼接后的结果是: admin:admin123，然后再用Base64编码，得到YWRtaW46YWRtaW4xMjM=。然后放到头部Authorization: Basic YWRtaW46YWRtaW4xMjM=
 
 认证过程：
 
@@ -18,3 +18,8 @@ Base64算法编码（username：password ）
 **5** 服务器解码认证信息，认证成功后返回请求的资源。
 
 缺点： 安全性比较差
+
+Key Authorization
+-
+
+根据用户生成key：secret的秘钥对，key和secret都是UUID，即通用唯一识别码 (Universally Unique Identifier)。
