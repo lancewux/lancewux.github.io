@@ -11,11 +11,11 @@ HTTP协议状态码表示的意思主要分为五类 ,大体是 :
 - 4×× 　　客户错误   
 - 5×× 　　服务器错误  
 
-### 100 Continue
+#### 100 Continue
 
 这是指客户端询问是否可以在后续的请求中发送附件。在这种情况下，服务器用100(SC_CONTINUE)允许客户端继续或用417 (Expectation Failed)告诉客户端不同意接受附件。这个状态码是 HTTP 1.1中新加入的。
 
-### 101 Switching Protocols
+#### 101 Switching Protocols
 
 指服务器将按照其上的头信息变为一个不同的协议。这是 HTTP 1.1中新加入的。 
 
