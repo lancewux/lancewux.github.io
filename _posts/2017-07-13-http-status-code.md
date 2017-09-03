@@ -1,52 +1,82 @@
-<h1 align="center"> HTTP状态码</h1>
+<h1 align="center"> HTTP</h1>
+
+HTTP协议状态码
+-
 
 HTTP协议状态码表示的意思主要分为五类 ,大体是 : 
 
-- 1×× 　　保留
+- 1×× 　　指定客户端相应的某些动作。
 - 2×× 　　表示请求成功地接收   
 - 3×× 　　为完成请求客户需进一步细化请求   
 - 4×× 　　客户错误   
 - 5×× 　　服务器错误  
 
-Successful 
--
+### 100 Continue
 
-200 OK
+这是指客户端询问是否可以在后续的请求中发送附件。在这种情况下，服务器用100(SC_CONTINUE)允许客户端继续或用417 (Expectation Failed)告诉客户端不同意接受附件。这个状态码是 HTTP 1.1中新加入的。
 
-Redirection 
--
+### 101 Switching Protocols
 
-301 Moved Permanently
+指服务器将按照其上的头信息变为一个不同的协议。这是 HTTP 1.1中新加入的。 
 
-302 Move temporarily
+只有在切换新的协议更有好处的时候才应该采取类似措施。例如，切换到新的HTTP 版本比旧版本更有优势，或者切换到一个实时且同步的协议以传送可以利用此类特性的资源。
 
-304 Not Modified
+### 200 OK
 
-307 Temporary Redirect
+请求已成功，请求所希望的响应头或数据体将随此响应返回。一般用于GET与POST请求。
 
-Client Error 
--
+### 201 Created
 
-400 Bad Request
+请求已经被实现，而且有一个新的资源已经依据请求的需要而建立，且其 URI 已经随Location 头信息返回。假如需要的资源无法及时建立的话，应当返回 '202 Accepted'。
 
-401 Unauthorized
+### 202 Accepted
 
-403 Forbidden
+服务器已接受请求，但尚未处理。正如它可能被拒绝一样，最终该请求可能会也可能不会被执行。在异步操作的场合下，没有比发送这个状态码更方便的做法了。
 
-404 Not Found
+返回202状态码的响应的目的是允许服务器接受其他过程的请求。例如处理某个每天只执行一次的基于批处理的操作，不必让客户端一直保持与服务器的连接直到批处理操作全部完成。
 
-407 Proxy Authentication Required
+### 203 Non-Authoritative Information
 
-Server Error 
--
+状态码203 (SC_NON_AUTHORITATIVE_INFORMATION)是表示文档被正常的返回，但是由于正在使用的是文档副本所以某些响应头信息可能不正确。这是 HTTP 1.1中新加入的。
 
-500 Internal Server Error 
+### 204 No Content
 
-502 Bad Gateway
+无内容。服务器成功处理，但未返回内容。在未更新网页的情况下，可确保浏览器继续显示当前文档。
 
-503 Service Unavailable
+这种方法对通过刷新响应头信息或等价的HTML标记自动重载的页面起作用，因为它会返回一个204状态码停止以后的重载。
 
-504 Gateway Timeout
+### 205 Reset Content
+
+重置内容，虽然没有新文档但浏览器要重置文档显示。这个状态码用于强迫浏览器清除表单域。这是 HTTP 1.1中新加入的。 
+
+### 206 Partial Content
+
+这是 HTTP 1.1中新加入的。 
+
+服务器已经成功处理了部分 GET 请求。类似于 FlashGet 或者迅雷这类的 HTTP下载工具都是使用此类响应实现断点续传或者将一个大文档分解为多个下载段同时下载。
+
+该请求必须包含 Range 头信息来指示客户端希望得到的内容范围，并且可能包含 If-Range 来作为请求条件。
+
+响应必须包含如下的头部域：
+
+Content-Range 用以指示本次响应中返回的内容的范围；如果是 Content-Type 为 multipart/byteranges 的多段下载，则每一 multipart 段中都应包含 Content-Range 域用以指示本段的内容范围。假如响应中包含 Content-Length，那么它的数值必须匹配它返回的内容范围的真实字节数。
+
+### 300 Multiple Choices
+
+### 301 Moved Permanently
+
+### 302	Found
+
+### 303 See Other
+
+### 304 Not Modified
+
+### 305 Use Proxy
+
+### 306 Switch Proxy
+
+### 307 Temporary Redirect
+
 
 
 参考资料
