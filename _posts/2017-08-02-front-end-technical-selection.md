@@ -249,7 +249,7 @@ try {
 
 ### 项目结构
 
-```javscript
+```javascript
 .
   |--build                                  // 打包输出文件
   |--config                                 // 构建配置文件

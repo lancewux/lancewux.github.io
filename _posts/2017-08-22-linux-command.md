@@ -34,8 +34,6 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### ps -ef | grep tomcat 
 
-#### ln source dest
-
 #### pwd
 
 #### tar zxvf FileName.tar.gz
@@ -47,6 +45,8 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 #### tee
 
 #### curl wget
+
+#### ln source dest
 
 建立硬链接。
 

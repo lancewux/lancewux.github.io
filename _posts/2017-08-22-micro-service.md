@@ -38,3 +38,33 @@ http://blog.jobbole.com/72992/
 https://springcloud.cc/
 
 $TOMCAT_HOME/bin/catalina.sh start
+
+consul
+-
+
+新建服务器节点：
+
+consul agent -server -bootstrap-expect=1 \
+ -data-dir=/tmp/consul -node=agent-49 -bind=192.168.204.49 \
+ -enable-script-checks=true -config-dir=/etc/consul.d
+
+查看节点：
+
+consul members
+
+curl localhost:8500/v1/catalog/nodes
+
+查看服务（比如web）：
+
+curl http://localhost:8500/v1/catalog/service/web
+
+新建客户端节点：
+
+consul agent -data-dir=/tmp/consul -node=agent-48 \
+-bind=192.168.204.48 -enable-script-checks=true -config-dir=/etc/consul.d
+
+在服务器节点把客户端节点加入集群：
+
+consul join 192.168.204.48
+
+
