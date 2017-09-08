@@ -142,3 +142,6 @@ CORS是Cross-Origin Resource Sharing的简称，也就是跨域资源共享。�
 
 <a href="http://blog.csdn.net/joyhen/article/details/21631833">WebSockets</a>
 
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="blank">HTTP访问控制（CORS）</a>
+
+<a href="http://harttle.com/2016/12/28/cors-with-cookie.html" target="blank">CORS 跨域发送 Cookie</a>

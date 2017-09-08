@@ -69,6 +69,16 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 查看所有的登陆用户信息
 
 
+#### find . -maxdepth 3 -type f -name '*node*'
+
+
+#### chmod
+
+chmod ugo+r file1.txt 
+
+chmod 777 file1.txt
+
+
 
 
 
