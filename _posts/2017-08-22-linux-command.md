@@ -32,6 +32,8 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### netstat -anp | grep 808
 
+#### lsof -i:8080
+
 #### ps -ef | grep tomcat 
 
 #### pwd

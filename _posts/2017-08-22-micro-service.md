@@ -100,7 +100,7 @@ curl --request PUT http://127.0.0.1:8500/v1/agent/leave
 
 添加本地服务：
 
-curl --request PUT --data '{"name": "hello", "tags": ["rails"], "address": "192.168.204.49", "port": 7301}'  http://127.0.0.1:8500/v1/agent/service/register
+curl --request PUT --data '{"name": "hello", "tags": ["hwtrip"], "address": "192.168.204.49", "port": 7301}'  http://127.0.0.1:8500/v1/agent/service/register
 
 删除服务：
 
@@ -116,9 +116,9 @@ npm install consul --save
 npm install koa --save
 
 curl -v --request POST \
--H "Authorization: basic dGo6dG9iaQ==" -H "Content-Type: application/json" \
+-H "Authorization: basic aHd0cmlwd2ViOmh3dHJpcHdlYjIwMTc=" -H "Content-Type: application/json" \
 --cookie "cname=cval" --data '{"name":"lance"}' \
-http://192.168.204.49:3033/micro/hello/lance?age=6 -i
+http://192.168.204.49:3033/microa/hello/lance?age=6 -i
 
 curl -v --request POST \
 -H "Content-Type: application/json" \
