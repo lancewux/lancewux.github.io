@@ -69,10 +69,12 @@ Element 对象
 - getAttribute(attributename) 获取属性值
 - setAttribute(attributename,attributevalue) 设置属性值
 - getAttributeNode(attributename) 返回指定的属性节点
+- querySelector("css selector") 返回匹配指定 CSS 选择器元素的第一个子元素
+- querySelectorAll("css selector") 返回匹配指定 CSS 选择器元素的第一个所有子元素
 
 ```html
 		<div id="div" class="red cool" style="position:relative">
-			<p id="p1" style="position:absolute;top:-40px;">para 1</p>
+			<p id="p1" style="position:absolute;top:80px;">para 1</p>
 			<p id="p2">para 2</p>
 			<div id="div1" >
 				<p id="p3" >para 3</p>
@@ -89,6 +91,8 @@ Element 对象
 			console.log(elDiv.contains(elP1)); //true 是后代元素，与渲染位置无关
 			console.log(elDiv.compareDocumentPosition(elP1) & 16);  //16 是后代元素
 			console.log(elP1.firstChild.nodeType);  //3 是后代元素
+			console.log(elDiv.querySelectorAll('p').length); //3
+			console.log(document.querySelector('#div>p#p1').style.position); //'absolute'
 			var elA = document.createElement('a');
 			elDiv.appendChild(elA);  //添加时没有新建副本，把elA节点添加进去了，elA就是页面上新添加元素的索引
 			elA.innerText = 'ddf'; //设置的文本会更新到页面上

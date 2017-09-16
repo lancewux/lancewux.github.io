@@ -6,7 +6,7 @@
 
 　　js选择了成为单线程的语言，所以它本身不可能是异步的，但js的宿主环境（比如浏览器，Node）是多线程的，宿主环境通过某种方式（事件驱动）使得js具备了异步的属性。
 
-任务（回调）队列
+浏览器的Event Loop
 -
 
 　　An event loop is "an entity that handles and processes external events and converts them into callback invocations".
@@ -41,7 +41,7 @@
 Node.js的Event Loop
 -
 
-　　关于Node.js的第一个基本概念是I/O操作开销是巨大的：
+关于Node.js的第一个基本概念是I/O操作开销是巨大的：
 
 <p align="center"><img src="/images/posts/2017-07-03/iocost.jpg" /></p>
 
@@ -54,12 +54,13 @@ Node.js的Event Loop
 - 开启新线程  
 每个请求都开启一个新线程。利：简单，而且跟进程比，对系统内核更加友好，因为线程比进程轻的多;弊:不是所有的机器都支持线程，而且对于要处理共享资源的情况，多线程编程会很快变得太过于复杂。
 
-　　第二个基本概念是为每个连接都创建一个新线程是很消耗内存的（例如：对比Nginx，Apache要吃掉很多内存）。
+第二个基本概念是为每个连接都创建一个新线程是很消耗内存的（例如：对比Nginx，Apache要吃掉很多内存）。
 
+Node.js也是单线程的Event Loop，但是它的运行机制不同于浏览器环境。
 
-#### Node.js让你的代码运行在一个单线程之中， 然而，除了你的代码，其它的一切都是并行执行的
+Node.js让你的代码运行在一个单线程之中， 然而，除了你的代码，其它的一切都是并行执行的
 
-　　你不能并行执行任何代码，一个sleep函数也会阻塞服务1s。当这段代码运行时，Node.js不会响应客户端任何请求，因为只有一个线程来运行你的代码，另外，如果你执行cpu密集的任务，比如重设图像的大小，它也会阻塞所有请求。
+你不能并行执行任何代码，一个sleep函数也会阻塞服务1s。当这段代码运行时，Node.js不会响应客户端任何请求，因为只有一个线程来运行你的代码，另外，如果你执行cpu密集的任务，比如重设图像的大小，它也会阻塞所有请求。
 
 ```javascript
 var now = new Date().getTime();
@@ -67,64 +68,6 @@ while(new Date().getTime() < now + 1000) {
     // do nothing
 }
 ```
-
-　　Node.js也是单线程的Event Loop，但是它的运行机制不同于浏览器环境。
-
-<p align="center"><img src="/images/posts/2017-07-03/nodejseventlop.png" /></p>
-
-- V8引擎解析JavaScript脚本。
-- 解析后的代码，调用Node API，并进入LIBUV的第一个事件的回调函数。
-- libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。
-- V8引擎再将结果返回给用户。
-
-process.nextTick和setImmediate
--
-
-```javascript
-fs.readFile('./data.json', () => {
-  setTimeout(() => {
-    console.log('timeout');
-  }, 0);
-  setImmediate(() => {
-    console.log('immediate');
-  });
-  console.log('end');
-});
-//end immediate timeout
-```
-
-process.nextTick方法在当前"执行栈"的尾部----下一次Event Loop（主线程读取"任务队列"）之前----添加回调函数。setImmediate方法则是在当前"任务队列"的尾部添加事件，与setTimeout(fn, 0)很像。
-
-```javascript
-process.nextTick(function A() {
-  console.log(1);
-  process.nextTick(function B(){console.log(2);});
-});
-setTimeout(function timeout() {
-  console.log('TIMEOUT');
-}, 0);
-console.log(3);
-// 3 1 2 TIMEOUT
-```
-
-
-### Reference
-
-<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a>
-
-<a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
-
-http://www.journaldev.com/7462/node-js-architecture-single-threaded-event-loop
-
-https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
-
-https://stackoverflow.com/questions/10680601/nodejs-event-loop
-
-https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish
-
-https://www.quora.com/What-provides-the-event-loop-in-node-js-v8-or-libuv
-
-http://docs.libuv.org/en/v1.x/design.html
 
 libuv是一个跨平台的的事件驱动异步I/O模型库
 
@@ -189,5 +132,35 @@ fs.readFile('./data.json', () => {
 //immediate timeout
 ```
 
-process.nextTick(cb3())与event loop所在的执行阶段无关，只要当前操作执行完成，就会执行cb3()。所以process.nextTick()的回调函数比setImmediate()和setImmediate()的回调函数都要先执行。
+process.nextTick(cb3())与event loop所在的执行阶段无关，只要当前操作执行完成，就会执行cb3()。所以process.nextTick()的回调函数比setImmediate()和setTimeout()的回调函数都要先执行。
+
+```javascript
+process.nextTick(function A() {
+  console.log(1);
+  process.nextTick(function B(){console.log(2);});
+});
+setTimeout(function timeout() {
+  console.log('TIMEOUT');
+}, 0);
+console.log(3);
+// 3 1 2 TIMEOUT
+```
+
+### Reference
+
+<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a>
+
+<a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
+
+http://www.journaldev.com/7462/node-js-architecture-single-threaded-event-loop
+
+https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
+
+https://stackoverflow.com/questions/10680601/nodejs-event-loop
+
+https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish
+
+https://www.quora.com/What-provides-the-event-loop-in-node-js-v8-or-libuv
+
+http://docs.libuv.org/en/v1.x/design.html
 
