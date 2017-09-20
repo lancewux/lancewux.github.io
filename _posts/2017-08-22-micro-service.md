@@ -124,3 +124,5 @@ curl -v --request POST \
 -H "Content-Type: application/json" \
 --data '{"name":"lance"}' \
 http://192.168.204.49:7301/micro/hello/lance?age=6 -i
+
+curl -v --request POST --data '{"name":"lance"}' http://192.168.204.49:7004/micro/points/consume_points
