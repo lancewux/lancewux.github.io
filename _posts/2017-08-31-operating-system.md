@@ -10,7 +10,7 @@ TTY
 EOL
 -
 
-换行符 (EOL) 通常由 line feed (LF, \\n) 和 carriage return (CR, \\r) 组成. 常见的情况:
+换行符 (EOL) 通常由 line feed (LF, \\n, 回到最左边) 和 carriage return (CR, \\r, 换行) 组成. 常见的情况:
 
 |符号|系统|
 |:--|:----|

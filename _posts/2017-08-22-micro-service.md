@@ -118,6 +118,7 @@ npm install koa --save
 curl -v --request POST \
 -H "Authorization: basic aHd0cmlwd2ViOmh3dHJpcHdlYjIwMTc=" -H "Content-Type: application/json" \
 --cookie "cname=cval" --data '{"name":"lance"}' \
+
 http://192.168.204.49:3033/microa/hello/lance?age=6 -i
 
 curl -v --request POST \
@@ -126,3 +127,10 @@ curl -v --request POST \
 http://192.168.204.49:7301/micro/hello/lance?age=6 -i
 
 curl -v --request POST --data '{"name":"lance"}' http://192.168.204.49:7004/micro/points/consume_points
+
+curl -v --post302 -H "Content-Type: application/json" -d '{"order_sn":"17091915462614017","order_id":"34550","cate_id":2,"member_id":"040100009919","points":5}' \
+ http://192.168.204.49:7004/micro/points/present
+
+### istio
+ https://github.com/istio/istio
+ http://mp.weixin.qq.com/s/EIcRtRBwltcrfgOKrhjMow
