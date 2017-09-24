@@ -52,6 +52,9 @@ Element 对象
 - nextSibling 位于相同节点树层级的下一个节点，一般是回车符文本节点
 - previousSibling 位于相同节点树层级的前一个元素，一般是回车符文本节点
 - nodeType 节点类型，有12种值，1为元素节点，2为属性节点，3为文本节点
+- tagName
+- innerHTML
+- innerText
 
 
 主要对象方法：
