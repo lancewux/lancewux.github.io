@@ -140,7 +140,7 @@ call的参数是一个个传入的，而apply的参数是一数组的方式传�
 			//实现了this的绑定和参数的柯里化处理
 			Function.prototype.bind1 = function(context){
 				var args = Array.prototype.slice.call(arguments, 1),
-				self = this, //保存this，即调用bind方法的目标函数
+				self = this; //保存this，即调用bind方法的目标函数
 				bound = function(){ //函数柯里化的情况
 					var innerArgs = Array.prototype.slice.call(arguments);
 					var finalArgs = args.concat(innerArgs);
@@ -164,20 +164,22 @@ call的参数是一个个传入的，而apply的参数是一数组的方式传�
 			//用instanceof来完成这个分支判断，
 			Function.prototype.bind2 = function(context){
 				var args = Array.prototype.slice.call(arguments, 1);
-				var self = this;
+				var self = this; //保存this，即调用bind方法的目标函数 
 				var bound = function() {
 					var innerArgs = Array.prototype.slice.call(arguments);
 					var finalArgs = args.concat(innerArgs);
 					self.apply((this instanceof self ? this : context), finalArgs);
 				}
-				bound.prototype = self.prototype;
+				bound.prototype = self.prototype; //bind后的函数和原函数有相同的原型
 				return bound;
 			};
 
 			bar.prototype.friend = 'kevin';
 			var bindBar = bar.bind2(foo, 'ff');
 			var obj1 = {};
-			obj1.__proto__ = bindBar.prototype;
+			// obj1的原型等于bindBar的原型，等于bar的原型
+			// this instanceof self （obj1 instanceof bar）为true
+			obj1.__proto__ = bindBar.prototype; 
 			bindBar.call(obj1, 17); //undefined "ff" 17
 			console.log(obj1.habit); //shopping
 			console.log(obj1.friend); //kevin
@@ -252,6 +254,40 @@ new操作符到底干了什么
 		</script>
 ```
 
+instanceof
+-
+
+用例：
+
+```
+console.log(Object instanceof Object);//true 
+console.log(Function instanceof Function);//true 
+console.log(Number instanceof Number);//false 
+console.log(String instanceof String);//false 
+ 
+console.log(Function instanceof Object);//true 
+ 
+console.log(Foo instanceof Function);//true 
+console.log(Foo instanceof Foo);//false
+```
+
+源码模拟:
+
+```
+function instanceof(obj, fn) {
+	var objpt = obj.__proto__;
+	var fnpt = fn.prototype;
+	while (true) {
+		if (objpt === null) {
+			return false;
+		}
+		if (objpt === fnpt) {
+			return true;
+		}
+		objpt = objpt.__proto__;
+	}
+}
+```
 ### Reference
 
 <a href="https://segmentfault.com/a/1190000002662251">Javascript中bind()方法的使用与实现</a>
@@ -259,5 +295,7 @@ new操作符到底干了什么
 <a href="http://blog.jobbole.com/77956/">函数式JavaScript（4）：函数柯里化</a>
 
 <a href="http://blog.csdn.net/daimomo000/article/details/72897035" target="blank">JavaScript深入之bind的模拟实现</a>
+
+<a href="https://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/" target="_blank">JavaScript instanceof 运算符深入剖析</a>
 
 
