@@ -1,4 +1,4 @@
-<h1 align="center"> call,apply,bind,with详解</h1>
+<h1 align="center"> call,apply,bind,with,new详解</h1>
 
 call,apply,bind
 -
