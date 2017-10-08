@@ -138,13 +138,35 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 优化webapp的首页加载速度
 -
 
-使用codesplitting按路由划分模块来拆分代码。
+使用codesplitting按路由划分模块来拆分代码。首页文件，提取css，提取vendor.js,manifest.js
+
+使用uglify压缩 minify 混淆
 
 使用gzip压缩来压缩html css js等文件
 
 禁用etag
 
-使用智图压缩图片
+使用缓存Cache-Control，If-Modified-Since
+
+使用智图压缩图片，内联图片。
+
+使用cdn
+
+使用域名拆分 2到4个比较合适
+
+使用节流函数优化scroll事件
+
+使用分时函数解决插入大量元素造成内存崩溃问题
+
+使用事件委托
+
+#### js优化相关
+
+访问html集合元素使用局部变量
+
+使用createDocumentFragment()批量修改dom
+
+最小化重排(reflow)和重绘(repaint)，注意渲染数变化的排队和刷新。
 
 
 
