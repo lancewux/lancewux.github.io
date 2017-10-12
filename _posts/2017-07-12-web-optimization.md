@@ -140,33 +140,61 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 
 使用codesplitting按路由划分模块来拆分代码。首页文件，提取css，提取vendor.js,manifest.js
 
-使用uglify压缩 minify 混淆
+使用uglify压缩 minify 混淆 js css文件
 
 使用gzip压缩来压缩html css js等文件
+
+使用压缩工具压缩图片，使用內联图片
 
 禁用etag
 
 使用缓存Cache-Control，If-Modified-Since
 
-使用智图压缩图片，内联图片。
-
 使用cdn
 
 使用域名拆分 2到4个比较合适
 
-使用节流函数优化scroll事件
+把css文件放在顶部，js文件放在底部。
 
-使用分时函数解决插入大量元素造成内存崩溃问题
+避免css表达式
 
-使用事件委托
+减少DNS查询，比如增加TTL值
+
+删除无用脚本和重复脚本
+
+减少重定向和404
 
 #### js优化相关
 
-访问html集合元素使用局部变量
+动态创建script元素来加载js脚步，并添加到head标签，这样js文件的下载和执行都不会阻塞页面的其它资源。
 
-使用createDocumentFragment()批量修改dom
+一个执行环境的作用域链的节点通常包括可变对象，活动对象，全局对象。尽量不要使用 with 和try catch，会改变作用域链。
 
-最小化重排(reflow)和重绘(repaint)，注意渲染数变化的排队和刷新。
+多次查找成员变量时缓存成员变量。
+
+插入元素时使用innerHTML代替createElement，或者使用cloneNode克隆元素。
+
+用局部变量缓存html集合的属性，因为每次查询属性时，都会重新查询文档生成html集合。
+
+使用children代替childNodes，因为children不包含空白文档元素。
+
+使用querySelector代替getElementById，因为返回的不是html集合，不对应实时的文档结构。
+
+浏览器生产DOM树和渲染数两种数据结构。要最小化重排reflow和重绘repaint。
+
+大多数浏览器通过队列化修改并批量执行来优化重排reflow过程。避免不合理使用offsetTop，getComputeStyle等属性和方法频繁强制浏览器刷新队列。
+
+用createDocumentFragment()来批量修改dom。
+
+执行动画的元素用绝对定位使其脱离文档流，动画结束后再恢复定位，减少其他元素的重排。
+
+使用事件委托。
+
+优化正则表达式，减少查找时的回溯。
+
+使用函数节流来处理resize、scroll等事件，使用分时函数来分割大任务。
+
+使用位操作，使用原生方法，比如Math对象的成员函数。
 
 
 
