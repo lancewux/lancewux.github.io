@@ -89,15 +89,124 @@ CSS
 
 #### 不在html中缩放图片
 
+gzip
+-
+
+Gzip是一种流行的文件压缩算法。当应用Gzip压缩到一个纯文本文件时，大约可以减少70％以上的文件大小。
+
+服务器用Gzip压缩算法对发布的网页内容进行压缩，然后传输到客户端浏览器，浏览器解压缩后进行展示。降低了网络传输的字节数，加快了网页加载的速度。
+
+辨别是否使用了gzip压缩的方法是看response headers里面有没有‘Content-Encoding:gzip’字段。
+
+使用gzip的方法，首先是在http请求里面加入‘Accept-Encoding:gzip, deflate, br’字段，然后设置服务器配置（这里一nginx为例）
+
+```
+gzip on;
+gzip_min_length 1k;
+gzip_buffers 4 16k;
+#gzip_http_version 1.0;
+#gzip_comp_level 2;
+gzip_types text/plain application/x-javascript application/javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
+gzip_vary on;
+gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+```
+
+gzip压缩的原理是首先使用LZ77算法的一个变种进行压缩，然后再使用Huffman编码。
+
+#### LZ77算法
+
+如果文件中有两块相同的内容的话，就可以用前一块的位置和大小来替换后一块的内容。
+
+源字符串‘qqww23456aqww2345w’用（距离，长度）替换后为‘qqww23456a(9,7)w‘，总长度变小了。
+
+LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串。
+
+#### huffman
+
+对文件进行重新编码，思路是出现频率高的字符用短编码，出现频率低的字符用长编码，这样总的编码长度就变小了。
+
+首先根据字符的出线频率建立huffman树，出现频率最高的字符为根节点。然后依据huffman树对字符进行huffman编码，所有父节点到左子节点的路径标为0，所有父节点到右子节点的路径标为1，把从根节点到叶子节点的路径上的0和1的序列作为这个节点的huffman编码。
+
+文件压缩：
+
+读文件，统计每个字符出现的次数。根据次数建立huffman树，得到每个字符的huffman编码。把文件中的每个符号替换成对应的huffman编码，并把每个字符出现次数信息保存在压缩文件中。
+
+解压缩：
+
+获取压缩文件中每个字符出现次数信息，依据这些信息建立huffman树，得到每个字符的huffman编码，把压缩文件中的huffman编码换成对应的字符。
+
+优化webapp的首页加载速度
+-
+
+使用codesplitting按路由划分模块来拆分代码。首页文件，提取css，提取vendor.js,manifest.js
+
+使用uglify压缩 minify 混淆 js css文件
+
+使用gzip压缩来压缩html css js等文件
+
+使用压缩工具压缩图片，使用內联图片
+
+禁用etag
+
+使用缓存Cache-Control，If-Modified-Since
+
+使用cdn
+
+使用域名拆分 2到4个比较合适
+
+把css文件放在顶部，js文件放在底部。
+
+避免css表达式
+
+减少DNS查询，比如增加TTL值
+
+删除无用脚本和重复脚本
+
+减少重定向和404
+
+#### js优化相关
+
+动态创建script元素来加载js脚步，并添加到head标签，这样js文件的下载和执行都不会阻塞页面的其它资源。
+
+一个执行环境的作用域链的节点通常包括可变对象，活动对象，全局对象。尽量不要使用 with 和try catch，会改变作用域链。
+
+多次查找成员变量时缓存成员变量。
+
+插入元素时使用innerHTML代替createElement，或者使用cloneNode克隆元素。
+
+用局部变量缓存html集合的属性，因为每次查询属性时，都会重新查询文档生成html集合。
+
+使用children代替childNodes，因为children不包含空白文档元素。
+
+使用querySelector代替getElementById，因为返回的不是html集合，不对应实时的文档结构。
+
+浏览器生产DOM树和渲染数两种数据结构。要最小化重排reflow和重绘repaint。
+
+大多数浏览器通过队列化修改并批量执行来优化重排reflow过程。避免不合理使用offsetTop，getComputeStyle等属性和方法频繁强制浏览器刷新队列。
+
+用createDocumentFragment()来批量修改dom。
+
+执行动画的元素用绝对定位使其脱离文档流，动画结束后再恢复定位，减少其他元素的重排。
+
+使用事件委托。
+
+优化正则表达式，减少查找时的回溯。
+
+使用函数节流来处理resize、scroll等事件，使用分时函数来分割大任务。
+
+使用位操作，使用原生方法，比如Math对象的成员函数。
+
 
 
 ### Reference
 
-<a href="https://www.zhihu.com/question/40505685">前端性能优化手段都有哪些</a>
+<a href="https://www.zhihu.com/question/40505685" target="_blank">前端性能优化手段都有哪些</a>
 
-<a href="http://www.cnblogs.com/lei2007/archive/2013/08/16/3262897.html">前端性能优化----yahoo前端性能团队总结的35条黄金定律</a>
+<a href="http://www.cnblogs.com/lei2007/archive/2013/08/16/3262897.html" target="_blank">前端性能优化----yahoo前端性能团队总结的35条黄金定律</a>
 
-<a href="http://blog.csdn.net/grandpang/article/details/51329289">前端性能优化的总结</a>
+<a href="http://blog.csdn.net/grandpang/article/details/51329289" target="_blank">前端性能优化的总结</a>
+
+<a href="http://www.360doc.com/content/11/0218/15/2150347_94086443.shtml" target="_blank">http://www.360doc.com/content/11/0218/15/2150347_94086443.shtml</a>
 
 
 

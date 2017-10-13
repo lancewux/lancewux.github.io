@@ -147,6 +147,21 @@ RequireJS VS SeaJS
 
 - 寻找模块依赖的方式不一样。RequireJS主要靠define的第二个参数来获取依赖模块，而Sea.js主要通过正则匹配工厂函数的require调用来获取依赖模块。
 
+node require vs import
+-
+
+ES6标准发布后，module成为标准，标准的使用是以export指令导出接口，以import引入模块，但是在我们一贯的node模块中，我们采用的是CommonJS规范，使用require引入模块，使用module.exports导出接口。
+
+ES6发布的module并没有直接采用CommonJS，甚至连require都没有采用，也就是说require仍然只是node的一个私有的全局方法，module.exports也只是node私有的一个全局变量属性，跟标准半毛钱关系都没有。
+
+import的语法跟require不同，而且import必须放在文件的最开始，且前面不允许有其他逻辑代码，这和其他所有编程语言风格一致。
+
+从理解上，require是赋值过程，import是解构过程
+
+你在使用时，完全可以忽略模块化这个概念来使用require，仅仅把它当做一个node内置的全局函数，它的参数甚至可以是表达式
+
+
+
 ### Reference
 
 <a href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">amdjs/amdjs-api</a>
@@ -154,3 +169,6 @@ RequireJS VS SeaJS
 <a href="https://github.com/cmdjs/specification/blob/master/draft/module.md">Common Module Definition / draft</a>
 
 <a href="https://github.com/seajs/seajs/issues/242">CMD 模块定义规范</a>
+
+<a href="http://www.cnblogs.com/guanghe/p/6560698.html">NodeJS中的require和import</a>
+
