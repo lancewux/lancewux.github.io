@@ -65,7 +65,12 @@ public class Client implements ServiceSetter {
 }
 ```
 
+javascript 使用依赖注入模式前后的对比：
+
 ```
+
+//without di
+
 function Greeter(name) {
 	this.msg = 'welcome ' + name;
 }
@@ -81,7 +86,7 @@ Home.prototype.say = function() {
 var home = new Home();
 home.say();
 
-//di
+//with di
 
 function Greeter(name) {
 	this.msg = 'welcome ' + name;
