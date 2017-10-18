@@ -111,3 +111,6 @@ injector();
 ```
 
 
+
+<a href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html" target="_blank">设计模式,菜鸟驿站</a>
+
