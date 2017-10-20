@@ -58,6 +58,11 @@ Unix进程模型中，进程是按照父进程产生子进程，子进程产生�
 
 写入了错误内存地址就会发生本地堆冲突.随之而来的问题在于:写入错误的内存地址不会发生任何错误，而当其他程序用正确方式访问这个地址的时候才会出错.
 
+消息队列（Message queue）
+-
+
+<a href="https://en.wikipedia.org/wiki/Message_queue" target="_blank">消息队列</a>提供了一种异步通信协议，消息的发送者和接收者不需要在同一时间和消息队列打交道。消息会一直存在消息队列中，直到接收者取走它们。在计算机科学中，消息队列是用于IPC（inter-process communication）或ITC（inter-thread communication ）的软件工程组件。
+
 
 
 
