@@ -63,6 +63,16 @@ Unix进程模型中，进程是按照父进程产生子进程，子进程产生�
 
 <a href="https://en.wikipedia.org/wiki/Message_queue" target="_blank">消息队列</a>提供了一种异步通信协议，消息的发送者和接收者不需要在同一时间和消息队列打交道。消息会一直存在消息队列中，直到接收者取走它们。在计算机科学中，消息队列是用于IPC（inter-process communication）或ITC（inter-thread communication ）的软件工程组件。
 
+进程间通信（ inter-process communication，IPC）
+-
 
+在计算机科学中，<a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">进程间通信</a>特指操作系统提供的允许进程管理共享数据的机制。
+
+|方法|描述|
+|:-:|:-|
+|file|存储在硬盘上或被文件系统合成的记录|
+|signal|指一个进程发给另一个进程的系统消息，并不用于传输数据，而用于远程命令同伴进程|
+|Socket|使用网络接口发送的数据流|
+|Unix domain socket|类似于网络套接字，但是所有的通信都发生在内核中。使用文件系统作为地址空间，进程引用域套接字作为inode|
 
 
