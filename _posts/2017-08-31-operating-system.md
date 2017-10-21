@@ -68,11 +68,50 @@ Unix进程模型中，进程是按照父进程产生子进程，子进程产生�
 
 在计算机科学中，<a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">进程间通信</a>特指操作系统提供的允许进程管理共享数据的机制。
 
+实现IPC的方法如下：
+
 |方法|描述|
 |:-:|:-|
 |file|存储在硬盘上或被文件系统合成的记录|
 |signal|指一个进程发给另一个进程的系统消息，并不用于传输数据，而用于远程命令同伴进程|
 |Socket|使用网络接口发送的数据流|
 |Unix domain socket|类似于网络套接字，但是所有的通信都发生在内核中。使用文件系统作为地址空间，进程引用域套接字作为inode|
+|Message queue|一种异步数据流，多个进程不用连接就可以读写消息队列|
+|Pipe|单向数据通道，写进管道的写端的数据会被操纵系统缓存，直到被从管道的读端读取，一般用标准输入输出流实现。|
+|Named pipe|用文件实现的管道|
+|Shared memory|多个进程有权访问同一个内存块，那里创建了一个共享缓存|
+|Message passing|使用消息队列或管道进行通信，一般用于并发模型中|
+|Memory-mapped file|映射到RAM的文件|
+
+
+信号（Signal）
+-
+
+在POSIX系统中，<a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">信号</a>是指发送给进程或同进程中的线程的一个异步通知，来告知其一个发生的事件。
+
+信号和中断有点像，区别是，中断由处理器进行中介，并由内核处理，不属于IPC；而信号由内核(可能通过系统调用)进行中介，并由进程处理。
+
+可以用signal() 或 sigaction()系统函数来注册信号处理函数。
+
+信号处理会遇到竞态条件问题。
+
+信号会中断进程中的程序调用。信号处理可以把信号放到队列中（比如eventloop）并及时返回，主线程可以保持继续运行。
+
+标准流（Standard streams）
+-
+
+在计算机编程中，<a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">标准流</a>是程序执行前就在程序和运行环境之间连通的输入和输出的通信通道。
+
+在unix之前的操作系统中，程序需要明确地连接到合适的输入和输出设备，操纵系统的错综复杂是这变成了一项冗长乏味的工作。
+
+POSIX
+-
+
+<a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">Portable Operating System Interface (POSIX)</a>是维护操作系统兼容性的一套标准规范的集合。POSIX定义了application programming interface (API)，command line shells和utility interfaces。
+
+
+
+
+
 
 
