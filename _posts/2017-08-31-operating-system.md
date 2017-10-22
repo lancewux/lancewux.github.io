@@ -58,10 +58,7 @@ Unix进程模型中，进程是按照父进程产生子进程，子进程产生�
 
 写入了错误内存地址就会发生本地堆冲突.随之而来的问题在于:写入错误的内存地址不会发生任何错误，而当其他程序用正确方式访问这个地址的时候才会出错.
 
-消息队列（Message queue）
--
 
-<a href="https://en.wikipedia.org/wiki/Message_queue" target="_blank">消息队列</a>提供了一种异步通信协议，消息的发送者和接收者不需要在同一时间和消息队列打交道。消息会一直存在消息队列中，直到接收者取走它们。在计算机科学中，消息队列是用于IPC（inter-process communication）或ITC（inter-thread communication ）的软件工程组件。
 
 进程间通信（ inter-process communication，IPC）
 -
@@ -108,6 +105,80 @@ POSIX
 -
 
 <a href="https://en.wikipedia.org/wiki/Inter-process_communication" target="_blank">Portable Operating System Interface (POSIX)</a>是维护操作系统兼容性的一套标准规范的集合。POSIX定义了application programming interface (API)，command line shells和utility interfaces。
+
+
+网络套接字（Network socket）
+-
+
+套接字一般指网络套接字，<a href="https://en.wikipedia.org/wiki/Network_socket" target="_blank">网络套接字</a>代表在计算机网络的一个结点上发送和接收数据的内部端点。
+
+“套接字”这个术语类似于物理插座，两个结点通过通道进行通信，可以比作为，把插头插进一根电缆连接的两个插座中。类似的，术语端口号（port），即上面的插头，是结点的外部端点，在IPC中，也可以用作内部端点。
+
+进程可以使用套接字描述符、一种句柄（抽象引用，在内部用一个整数代表）来引用套接字。进程首先请求协议栈创建一个套接字并返回一个描述符，当进程要发送或接收数据时就把描述符传回给协议栈来使用相应的套接字。
+
+套接字是一个结点的内部资源，不能被其它结点直接引用。在网络通信中，套接字一般有相应的地址和网络连接。
+
+在 TCP 和 UDP中，套接字地址指的是一个网络结点的ip地址和端口号，可以把套接字与套接字地址进行绑定。如果套接字只用来发送数据，就可以不需要套接字地址。
+
+虽然在一个本地进程与一个外部进程的通信过程中，可以往或从一个外部套接字地址发送或接收数据，但是它并没有使用外部套接字的权限，也不能使用外部套接字描述符，因为它们都是外部结点的内部资源。
+
+协议栈通常指操作系统提供的允许进程使用相关协议进行网络通信的一组程序。程序用来和协议栈进行通信的API叫socket API。使用socket API进行程序开发叫做网络编程（network programming）。
+
+网络套接字API一般基于 Berkeley sockets standard，套接字是文件描述符的一种形式，因为unix的哲学是，一切都是文件。
+
+Unix domain socket
+-
+
+<a href="https://en.wikipedia.org/wiki/Unix_domain_socket" target="_blank">Unix domain socket</a>是同一台主机上的不同进程间进行通信的端点。
+
+
+Unix domain socket的api和Network socket的api是相似的，但并不使用网络协议，所有的通信都发生在操作系统的内核中。Unix domain socket使用文件系统作为地址命名空间，进程把Unix domain socket当作文件系统的inode，所以两个进程可以使用相同的socket进行通信。除了传输数据，还可以传输文件描述符，这样就可以把这个文件的相关权限授权给接收进程。
+
+端口（Port）
+-
+
+<a href="https://en.wikipedia.org/wiki/Port_(computer_networking)" target="_blank">端口号</a>是16bit的无符号整数，范围是0～65535。1024个端口号被系统保留，用作特殊服务。一般由传输层协议，比如TCP、UDP，在它们的头部指定源和目的端口号。
+
+
+文件描述符（File descriptor）
+-
+
+在Unix及相关的操作系统中，<a href="https://en.wikipedia.org/wiki/File_descriptor" target="_blank">文件描述符</a>是用来获取文件或其它输入输出资源（比如管道、网络套接字）的抽象指针。
+
+所有进程都有三个标准文件描述符，对应三种标准流：
+
+|Integer value|Name|file stream|
+|:-:|:-|:-|
+|0|Standard input|stdin|
+|1|Standard output|stdout|
+|2|Standard error|stderr|
+
+文件描述符指向每个进程的文件描述符表，然后索引到系统级的文件表，再索引到inode表。处理输入和输出时，进程把文件描述符传递给内核，然后内核代表该进程来处理该文件，进程没有直接获取文件表和inode表的权限。
+
+<p align="center"><img src="/images/posts/2017-08-20/File_table_and_inode_table.svg.png" /></p>
+
+inode
+-
+
+<a href="https://en.wikipedia.org/wiki/Inode" target="_blank">inode</a>时描述文件对象（比如文件和文件夹）的数据结构。每个inode都存储了文件对象的属性及硬盘块地址。属性一般包括元数据（改变时间，修改），拥有者和权限等。
+
+可以用 'ls -i' 命令查看inode
+
+一个文件可以有多个名字，当多个名字硬连接到同一个inode，这些文件名字都是等价的。如果是软连接，依赖的是第一个名字，而不是inode。
+
+inode可能没有连接，对应的文件将从硬盘中移除。
+
+当文件移动到同一个设备的其它文件夹时，inode不会改变。
+
+消息队列（Message queue）
+-
+
+<a href="https://en.wikipedia.org/wiki/Message_queue" target="_blank">消息队列</a>提供了一种异步通信协议，消息的发送者和接收者不需要在同一时间和消息队列打交道。消息会一直存在消息队列中，直到接收者取走它们。在计算机科学中，消息队列是用于IPC（inter-process communication）或ITC（inter-thread communication ）的软件工程组件。
+
+管道（pipeline）
+-
+
+在Unix-like操作系统中，<a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)" target="_blank">管道</a>就是一系列用标准流串连在一起的进程，这样一来，一个进程的输出直接变成下一个进程的输入。
 
 
 
