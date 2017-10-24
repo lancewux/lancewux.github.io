@@ -180,9 +180,42 @@ inode可能没有连接，对应的文件将从硬盘中移除。
 
 在Unix-like操作系统中，<a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)" target="_blank">管道</a>就是一系列用标准流串连在一起的进程，这样一来，一个进程的输出直接变成下一个进程的输入。
 
+标准的shell语法是列出多个命令，然后用竖杠隔开。‘ls -l’产生一个进程，该进程的输出被管道输送到‘grep key’进程的输入。‘less’进程也同样如此。通过标准流，一个进程从上一个进程获得输入，产生输出给下一个进程。每个‘|’告诉shell通过一种叫管道的IPC通信机制连接左边命令的标准输出到右边命令的标准输入。管道是单向的，数据通过管道从左流向右。
 
+```
+ ls -l | grep key | less
+ process1 | process2 | process3
+```
 
+标准错误流默认不在管道中传输，而是被合并然后传输给console。可以用下面的两种方法来改变这种行为。
 
+```
+ ls -l |& grep key
+ cat file1 >&1 > file2
+ cat file1 > file2 2>&1
+```
 
+使用系统函数pipe()会使操作系统创建一个新的匿名管道对象，在进程中生产两个新的文件描述符：管道的只读端和只写端。
+
+可以使用系统函数mkfifo()或mknod()来新建有名管道（named pipeline），两个分开的进程可以通过名字获取管道，一个进程以读的身份打开它，另一个进程以写的身份打开它。
+
+匿名管道的生存期和进程一致，而有名管道的生存期则超越了进程，只要系统运行，有名管道可以一直存在，直到被删除。有名管道利用文件系统，看起来也像一个文件。
+
+```
+ mkfifo my_pipe
+ gzip -9 -c < my_pipe > out.gz &
+ cat file > my_pipe
+ rm my_pipe
+```
+
+共享内存（shared memory）
+-
+
+<a href="https://en.wikipedia.org/wiki/Shared_memory" target="_blank">共享内存</a>是一块可以被多个程序同时访问的内存，其目的是通信或者避免冗余的副本。一个进程在RAM中创建一块区域，其它进程可以访问这块区域。
+
+消息传递（message passing）
+-
+
+<a href="https://en.wikipedia.org/wiki/Message_passing" target="_blank">消息传递</a>是一种触发行为的方式。消息传递使用对象模型来区分功能的具体实现。触发程序发送一个消息给对象，依靠对象去选择并执行合适的代码。使用这样一个中间层的原因是封装和分布。对象可以把具体的实现封装起来，不需要让触发程序知道，对象的具体实现还可以分布到不同的电脑上。
 
 
