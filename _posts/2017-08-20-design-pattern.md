@@ -150,7 +150,12 @@ injector();
 
 不同点有，subject维护了observer的实例列表，依赖于observer；而在发布-订阅模式中，发布者和订阅者是完全解耦的，它们完全可以不知道对方的存在。观察者模式一般是用于程序设计，而发布订阅者模式一般用于系统设计。观察者模式解决一对多依赖问题，而发布-订阅模式解决多对多依赖问题。
 
+### 组合模式（Composite  pattern）
 
+
+### 装饰者模式（Decorator pattern）
+
+装饰者模式允许静态或动态地把行为加到一个对象，而不影响其它的从同一个类实例化得到的对象。装饰者模式很好地遵守了单一职责原则（Single Responsibility Principle），
 
 <a href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html" target="_blank">设计模式,菜鸟驿站</a>
 
