@@ -150,12 +150,279 @@ injector();
 
 不同点有，subject维护了observer的实例列表，依赖于observer；而在发布-订阅模式中，发布者和订阅者是完全解耦的，它们完全可以不知道对方的存在。观察者模式一般是用于程序设计，而发布订阅者模式一般用于系统设计。观察者模式解决一对多依赖问题，而发布-订阅模式解决多对多依赖问题。
 
-### 组合模式（Composite  pattern）
+### 组合模式（Composite pattern）
 
+组合模式将对象组合成树形结构，以表示‘部分-整体’的层级结构，使得用户对单个对象和组合对象的使用具有一致性。
+
+通过树形结构，只要运行组合对象的一个方法，组合对象下所有对象相应的方法都会被调用。
+
+用户可以同等地使用单个对象和组合对象，而不必关心它究竟是单个对象还是组合对象。
+
+linux的文件处理就是使用的组合模式，文件和文件夹得到了同等对待。
+
+```java
+/** "Component" */
+interface Graphic {
+
+    //Prints the graphic.
+    public void print();
+}
+
+/** "Composite" */
+class CompositeGraphic implements Graphic {
+
+    //Collection of child graphics.
+    private List<Graphic> childGraphics = new ArrayList<Graphic>();
+
+    //Prints the graphic.
+    public void print() {
+        for (Graphic graphic : childGraphics) {
+            graphic.print();
+        }
+    }
+
+    //Adds the graphic to the composition.
+    public void add(Graphic graphic) {
+        childGraphics.add(graphic);
+    }
+
+    //Removes the graphic from the composition.
+    public void remove(Graphic graphic) {
+        childGraphics.remove(graphic);
+    }
+}
+
+/** "Leaf" */
+class Ellipse implements Graphic {
+
+    //Prints the graphic.
+    public void print() {
+        System.out.println("Ellipse");
+    }
+}
+
+/** Client */
+public class Program {
+
+    public static void main(String[] args) {
+        //Initialize four ellipses
+        Ellipse ellipse1 = new Ellipse();
+        Ellipse ellipse2 = new Ellipse();
+        Ellipse ellipse3 = new Ellipse();
+        Ellipse ellipse4 = new Ellipse();
+
+        //Initialize three composite graphics
+        CompositeGraphic graphic = new CompositeGraphic();
+        CompositeGraphic graphic1 = new CompositeGraphic();
+        CompositeGraphic graphic2 = new CompositeGraphic();
+
+        //Composes the graphics
+        graphic1.add(ellipse1);
+        graphic1.add(ellipse2);
+        graphic1.add(ellipse3);
+
+        graphic2.add(ellipse4);
+
+        graphic.add(graphic1);
+        graphic.add(graphic2);
+
+        //Prints the complete graphic (four times the string "Ellipse").
+        graphic.print();
+    }
+}
+```
 
 ### 装饰者模式（Decorator pattern）
 
-装饰者模式允许静态或动态地把行为加到一个对象，而不影响其它的从同一个类实例化得到的对象。装饰者模式很好地遵守了单一职责原则（Single Responsibility Principle），
+装饰者模式允许静态或动态地把行为加到一个对象，而不影响其它的从同一个类实例化得到的对象。装饰者模式很好地遵守了单一职责原则（Single Responsibility Principle）。
 
+通过新建一个包装原类的装饰类来实现。装饰的特性一般由接口、mixin或类继承来定义。
+
+装饰类在构造函数中获得被装饰的对象，然后覆盖被装饰对象的方法，覆盖的方法是先调用被装饰对象的原方法，再添加装饰的方法。
+
+```java
+// The interface Coffee defines the functionality of Coffee implemented by decorator
+public interface Coffee {
+    public double getCost(); // Returns the cost of the coffee
+    public String getIngredients(); // Returns the ingredients of the coffee
+}
+
+// Extension of a simple coffee without any extra ingredients
+public class SimpleCoffee implements Coffee {
+    @Override
+    public double getCost() {
+        return 1;
+    }
+
+    @Override
+    public String getIngredients() {
+        return "Coffee";
+    }
+}
+
+// Abstract decorator class - note that it implements Coffee interface
+public abstract class CoffeeDecorator implements Coffee {
+    protected final Coffee decoratedCoffee;
+
+    public CoffeeDecorator(Coffee c) {
+        this.decoratedCoffee = c;
+    }
+
+    public double getCost() { // Implementing methods of the interface
+        return decoratedCoffee.getCost();
+    }
+
+    public String getIngredients() {
+        return decoratedCoffee.getIngredients();
+    }
+}
+
+// Decorator WithMilk mixes milk into coffee.
+// Note it extends CoffeeDecorator.
+class WithMilk extends CoffeeDecorator {
+    public WithMilk(Coffee c) {
+        super(c);
+    }
+
+    public double getCost() { // Overriding methods defined in the abstract superclass
+        return super.getCost() + 0.5;
+    }
+
+    public String getIngredients() {
+        return super.getIngredients() + ", Milk";
+    }
+}
+
+// Decorator WithSprinkles mixes sprinkles onto coffee.
+// Note it extends CoffeeDecorator.
+class WithSprinkles extends CoffeeDecorator {
+    public WithSprinkles(Coffee c) {
+        super(c);
+    }
+
+    public double getCost() {
+        return super.getCost() + 0.2;
+    }
+
+    public String getIngredients() {
+        return super.getIngredients() + ", Sprinkles";
+    }
+}
+
+public class Main {
+    public static void printInfo(Coffee c) {
+        System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+    }
+
+    public static void main(String[] args) {
+        Coffee c = new SimpleCoffee();
+        printInfo(c);
+
+        c = new WithMilk(c);
+        printInfo(c);
+
+        c = new WithSprinkles(c);
+        printInfo(c);
+    }
+}
+
+// The output of this program is given below
+// Cost: 1.0; Ingredients: Coffee
+// Cost: 1.5; Ingredients: Coffee, Milk
+// Cost: 1.7; Ingredients: Coffee, Milk, Sprinkles
+```
+
+```
+var Plane = function() {}
+Plane.prototype.fire = function() {
+    console.log('Fire ordinary bullet');
+}
+
+var MissileDecorator = function(plane) {
+    this.plane = plane;
+}
+MissileDecorator.prototype.fire = function() {
+    this.plane.fire();
+    console.log('Launch a missile');
+}
+
+var AtomDecorator = function(plane) {
+    this.plane = plane;
+}
+AtomDecorator.prototype.fire = function() {
+    this.plane.fire();
+    console.log('Nuclear launch');
+}
+
+var plane = new Plane();
+plane = new MissileDecorator(plane);
+plane = new AtomDecorator(plane);
+// Fire ordinary bullet, Launch a missile, Nuclear launch
+```
+
+这种动态增加职责的方法并没有改动原对象，而是把一个对象放入另一个对象中，这些对象以一条链的方式进行引用，形成一个聚合对象。这些对象拥有相同的接口，所以装饰过程对用户来说是透明的。
+
+### mixin
+
+mixin是一个包含被其它类使用的方法的类，但却不是其它类的父类。其它类怎样获得mixin类的方法取决于编程语言。mixin有时被描述成被包含，而不是被继承。
+
+mixin提供了一种多重继承的方式，规避了多重继承的复杂性和问题。
+
+javascript可以通过extend和委托的方式实现mixin
+
+```
+// This example may be contrived.
+// It's an attempt to clean up the previous, broken example.
+var Halfling = function (fName, lName) {
+    this.firstName = fName;
+    this.lastName = lName;
+}
+
+var NameMixin = {
+    fullName: function () {
+        return this.firstName + ' ' + this.lastName;
+    },
+    rename: function(first, last) {
+        this.firstName = first;
+        this.lastName = last;
+        return this;
+    }
+};
+
+var sam = new Halfling('Sam', 'Lowry');
+var frodo = new Halfling('Freeda', 'Baggs');
+
+// Mixin the other methods
+_.extend(Halfling.prototype, NameMixin);
+
+// Now the Halfling objects have access to the NameMixin methods
+sam.rename('Samwise', 'Gamgee');
+frodo.rename('Frodo', 'Baggins');
+```
+
+```
+// Implementation
+var EnumerableFirstLast = (function () { // function based module pattern.
+    var first = function () {
+        return this[0];
+    },
+    last = function () {
+        return this[this.length - 1];
+    };
+    return function () {      // function based Flight-Mixin mechanics ...
+        this.first  = first;  // ... referring to ...
+        this.last   = last;   // ... shared code.
+    };
+}());
+
+// Application - explicit delegation:
+// applying [first] and [last] enumerable behavior onto [Array]'s [prototype].
+EnumerableFirstLast.call(Array.prototype);
+
+// Now you can do:
+a = [1, 2, 3];
+a.first(); // 1
+a.last();  // 3
+```
 <a href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html" target="_blank">设计模式,菜鸟驿站</a>
 
