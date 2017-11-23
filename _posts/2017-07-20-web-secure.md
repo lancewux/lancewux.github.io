@@ -70,7 +70,7 @@ https最主要的问题是，没有办法使用CDN，网站的证书又需要非
 
 解决方法是完全可以把私钥留在自家服务器，只用来解密对话密钥，其他步骤都让CDN服务商去完成。
 
-<p align="center"><img src="/images/posts/2017-07-20/cdnrsashake.png" /></p>
+<p align="center"><img style="width:1000px;" src="/images/posts/2017-07-20/cdnrsashake.png" /></p>
 
 Heartbleed
 -

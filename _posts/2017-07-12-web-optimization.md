@@ -89,6 +89,9 @@ CSS
 
 #### 不在html中缩放图片
 
+我们常见的图片格式有JPEG、GIF、PNG。基本上，内容图片多为照片之类的，适用于JPEG。而修饰图片通常更适合用无损压缩的PNG。而GIF基本上除了GIF动画外不要使用。且动画的话，也更建议用video元素和视频格式，或用SVG动画取代。除了这些格式之外，Chrome、新版Opera、Android 4+支持WebP格式，IE 9+、IE mobile 10+支持JPEG XR。这两个新格式都支持无损和有损压缩，都具有更良好的压缩比。当然这需要为不同的浏览器返回不同的图片，增加了开发成本，也增加存储成本。不过你省了流量或者相同流量下改善了图片质量，提升了用户体验。你会如何取舍呢？对了，别忘了使用优秀的图片编码器及合适的参数。好的图片编码器，尤其是有损图片格式的编码器，能通过算法或手动调整，获得更高的压缩比。
+
+
 gzip
 -
 
@@ -144,7 +147,7 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 
 使用gzip压缩来压缩html css js等文件
 
-使用压缩工具压缩图片，使用內联图片 http://www.tuhaokuai.com/
+使用压缩工具压缩图片，使用內联图片 <a href="http://www.tuhaokuai.com/" target="_blank">图好快</a>
 
 禁用etag
 
@@ -163,6 +166,12 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 删除无用脚本和重复脚本
 
 减少重定向和404
+
+开启KeepAlive
+
+使用预渲染 <a href="https://github.com/chrisvfritz/prerender-spa-plugin" target="_blank">prerender-spa-plugin</a>
+
+使用同构 <a href="https://ssr.vuejs.org/en/" target="_blank">Vue.js Server-Side Rendering</a>
 
 #### js优化相关
 
@@ -206,8 +215,9 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 
 <a href="http://blog.csdn.net/grandpang/article/details/51329289" target="_blank">前端性能优化的总结</a>
 
-<a href="http://www.360doc.com/content/11/0218/15/2150347_94086443.shtml" target="_blank">http://www.360doc.com/content/11/0218/15/2150347_94086443.shtml</a>
+<a href="http://www.360doc.com/content/11/0218/15/2150347_94086443.shtml" target="_blank">gzip原理与实现</a>
 
+<a href="https://www.cnblogs.com/wizcabbit/p/web-image-optimization.html" target="_blank">Web性能优化：图片优化</a>
 
 
 
