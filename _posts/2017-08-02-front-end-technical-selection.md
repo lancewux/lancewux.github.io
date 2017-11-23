@@ -409,7 +409,8 @@ React好像没有提供全局注入变量的入口。state需要通过Provider�
 **3** 解决具体的兼容性问题。
 
 用es5to3-webpack-plugin解决es3的保留字（比如语句、对象属性中出现的default）问题，属性加双引号的问题。
-babel-polyfill解决API（比如promise）缺失问题。
+babel-polyfill解决ES6/7的API（比如promise）缺失问题。
+es5-shim/es5-sham解决ES5的函数（比如Array.prototype.forEach、Object.create）缺失问题。
 用require('es5-shim')解决Bable把import转化成Object.defineProperty。
 es5-shim.js是给Javascript engine打补丁的, 所以必须最先加载。由于import是静态编译，会先于require执行，所以index.js里的所有模块加载都要用require。项目的模块是用ES6的模块写的，用require加载会报一个很奇怪的错误。 后面找到了一个babel-plugin-add-module-exports插件来解决这个问题。
 
