@@ -395,6 +395,31 @@ Redux可以看做Flux的一种变体，处理数据流如下：
 React好像没有提供全局注入变量的入口。state需要通过Provider容器来实现全局注入，然后通过connect函数把dispatch action和get state映射到组件里。用法参见<a href="http://https//github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">provider</a>
 
 
+解决兼容性问题
+-
+
+**1** 自己写配置，用google到的兼容0.14.8的别人写的配置，还是用官方脚手架生成的最新版本的配置？
+
+自己对react的插件不熟，别人写的配置太简单，所以用官方
+
+**2** 怎么对官方脚手架生成的项目进行模块和配置降级？
+
+根据发布时间对redux、react-router部分模块降级，因为降级意味着更多的未修复的bug，配置先不动。
+
+**3** 解决具体的兼容性问题。
+
+用es5to3-webpack-plugin解决es3的保留字（比如语句、对象属性中出现的default）问题，属性加双引号的问题。
+babel-polyfill解决API（比如promise）缺失问题。
+用require('es5-shim')解决Bable把import转化成Object.defineProperty。
+es5-shim.js是给Javascript engine打补丁的, 所以必须最先加载。由于import是静态编译，会先于require执行，所以index.js里的所有模块加载都要用require。项目的模块是用ES6的模块写的，用require加载会报一个很奇怪的错误。 后面找到了一个babel-plugin-add-module-exports插件来解决这个问题。
+
+**4** 定位问题
+
+调试build后的代码，看源码，从没bug的代码开始增量功能直至重现bug。
+
+
+
+
 相关参考资料
 -
 
