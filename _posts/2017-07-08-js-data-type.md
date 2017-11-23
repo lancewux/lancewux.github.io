@@ -71,4 +71,8 @@ var b = null || undefined ? 1 : 2; //强制类型转换成boolean
 console.log(b); //2
 ```
 
-https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md#%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD
+
+<a href="https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md#%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD" target="_blank">JavaScript 基础问题</a>
+
+<a href="https://www.cnblogs.com/cxying93/p/6106469.html" target="_blank">JavaScript中基本数据类型和引用数据类型的区别</a>
+
