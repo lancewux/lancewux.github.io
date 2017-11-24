@@ -185,6 +185,8 @@ function instanceof(obj, fn) {
 }
 ```
 
+所有 JavaScript 对象都有 __proto__ 属性，但只有 Object.prototype.__proto__ 为 null
+
 <p align="center"><img src="/images/posts/2017-07-10/object-inherit.jpg" /></p>
 
 Reference

@@ -254,40 +254,6 @@ new操作符到底干了什么
 		</script>
 ```
 
-instanceof
--
-
-用例：
-
-```
-console.log(Object instanceof Object);//true 
-console.log(Function instanceof Function);//true 
-console.log(Number instanceof Number);//false 
-console.log(String instanceof String);//false 
- 
-console.log(Function instanceof Object);//true 
- 
-console.log(Foo instanceof Function);//true 
-console.log(Foo instanceof Foo);//false
-```
-
-源码模拟:
-
-```
-function instanceof(obj, fn) {
-	var objpt = obj.__proto__;
-	var fnpt = fn.prototype;
-	while (true) {
-		if (objpt === null) {
-			return false;
-		}
-		if (objpt === fnpt) {
-			return true;
-		}
-		objpt = objpt.__proto__;
-	}
-}
-```
 ### Reference
 
 <a href="https://segmentfault.com/a/1190000002662251" target="_blank" >Javascript中bind()方法的使用与实现</a>
