@@ -219,6 +219,8 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 
 <a href="https://www.cnblogs.com/wizcabbit/p/web-image-optimization.html" target="_blank">Web性能优化：图片优化</a>
 
+<a href="https://developers.google.com/web/fundamentals/performance/rendering/?hl=zh-cn" target="_blank">渲染性能 60fps</a>
+
 
 
 

@@ -148,19 +148,20 @@ console.log(3);
 
 ### Reference
 
-<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a>
+<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank">JavaScript 运行机制详解：再谈Event Loop</a>
 
-<a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/">Understanding the node.js event loop</a>
+<a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/" target="_blank">Understanding the node.js event loop</a>
 
-http://www.journaldev.com/7462/node-js-architecture-single-threaded-event-loop
+<a href="https://www.journaldev.com/7462/node-js-architecture-single-threaded-event-loop" target="_blank">Node JS Architecture – Single Threaded Event Loop</a>
 
-https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
+<a href="https://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js" target="_blank">How do I get started with Node.js</a>
 
-https://stackoverflow.com/questions/10680601/nodejs-event-loop
+<a href="https://stackoverflow.com/questions/10680601/nodejs-event-loop" target="_blank">Nodejs Event Loop</a>
 
-https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish
+<a href="https://stackoverflow.com/questions/16378094/run-nodejs-event-loop-wait-for-child-process-to-finish" target="_blank">Run NodeJS event loop / wait for child process to finish</a>
 
-https://www.quora.com/What-provides-the-event-loop-in-node-js-v8-or-libuv
+<a href="https://www.quora.com/What-provides-the-event-loop-in-node-js-v8-or-libuv" target="_blank">What provides the event loop in node.js - v8 or libuv?</a>
 
-http://docs.libuv.org/en/v1.x/design.html
+<a href="http://docs.libuv.org/en/v1.x/design.html" target="_blank"> libuv Design overview</a>
+
 

@@ -46,6 +46,20 @@ Hybrid App
 - web部分仍然受网络影响较大，渲染能力弱。
 - 开发成本高
 
+React Native
+-
+
+### 优点
+
+- 解决Native App的体验
+- 更小的开发成本
+- 支持资源包更新
+
+### 缺点
+
+- 需要下载安装
+- 
+
 
 <a href="http://www.uisdc.com/web-hybrid-native-app" target="_blank">超赞！聊聊Web App、Hybrid App与Native App的设计差异</a>
 
