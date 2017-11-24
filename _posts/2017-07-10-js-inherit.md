@@ -35,8 +35,6 @@
 
 <p align="center"><img src="/images/posts/2017-07-10/prototype-chain.png" /></p>
 
-<p align="center"><img src="/images/posts/2017-07-10/object-inherit.jpg" /></p>
-
 原型链的主要问题有两个
 
 - 父类的属性会变成子类的共享属性，特别是引用类型的属性
@@ -150,6 +148,44 @@
 			console.log(instance2 instanceof SuperType); //true
 		</script>
 ```
+
+
+instanceof
+-
+
+用例：
+
+```
+console.log(Object instanceof Object);//true 
+console.log(Function instanceof Function);//true 
+console.log(Number instanceof Number);//false 
+console.log(String instanceof String);//false 
+ 
+console.log(Function instanceof Object);//true 
+ 
+console.log(Foo instanceof Function);//true 
+console.log(Foo instanceof Foo);//false
+```
+
+源码模拟:
+
+```
+function instanceof(obj, fn) {
+	var objpt = obj.__proto__;
+	var fnpt = fn.prototype;
+	while (true) {
+		if (objpt === null) {
+			return false;
+		}
+		if (objpt === fnpt) {
+			return true;
+		}
+		objpt = objpt.__proto__;
+	}
+}
+```
+
+<p align="center"><img src="/images/posts/2017-07-10/object-inherit.jpg" /></p>
 
 Reference
 -
