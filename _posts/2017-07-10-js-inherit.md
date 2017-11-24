@@ -35,6 +35,8 @@
 
 <p align="center"><img src="/images/posts/2017-07-10/prototype-chain.png" /></p>
 
+<p align="center"><img src="/images/posts/2017-07-10/object-inherit.jpg" /></p>
+
 原型链的主要问题有两个
 
 - 父类的属性会变成子类的共享属性，特别是引用类型的属性
@@ -148,4 +150,10 @@
 			console.log(instance2 instanceof SuperType); //true
 		</script>
 ```
+
+Reference
+-
+
+<a href="https://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/" target="_blank">JavaScript instanceof 运算符深入剖析</a>
+
 

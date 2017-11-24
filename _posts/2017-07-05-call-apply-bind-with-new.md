@@ -290,11 +290,11 @@ function instanceof(obj, fn) {
 ```
 ### Reference
 
-<a href="https://segmentfault.com/a/1190000002662251">Javascript中bind()方法的使用与实现</a>
+<a href="https://segmentfault.com/a/1190000002662251" target="_blank" >Javascript中bind()方法的使用与实现</a>
 
-<a href="http://blog.jobbole.com/77956/">函数式JavaScript（4）：函数柯里化</a>
+<a href="http://blog.jobbole.com/77956/" target="_blank">函数式JavaScript（4）：函数柯里化</a>
 
-<a href="http://blog.csdn.net/daimomo000/article/details/72897035" target="blank">JavaScript深入之bind的模拟实现</a>
+<a href="http://blog.csdn.net/daimomo000/article/details/72897035" target="_blank">JavaScript深入之bind的模拟实现</a>
 
 <a href="https://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/" target="_blank">JavaScript instanceof 运算符深入剖析</a>
 
