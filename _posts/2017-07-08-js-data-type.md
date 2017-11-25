@@ -18,6 +18,7 @@ console.log(typeof {a: 1}); //'object'
 var a;
 console.log(a === undefined); //true
 function fn() {}
+console.log(typeof fn); //'function'
 console.log(fn()); //'undefined'
 console.log(typeof b); //'undefined'
 console.log(b); //'Uncaught ReferenceError'

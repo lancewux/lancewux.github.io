@@ -16,7 +16,7 @@ Session是在服务端保存的一个数据结构，用来跟踪用户的状态�
 
 给HTTP Cookie设置HttpOnly，在浏览器的document对象中就看不到cookie了，而浏览器在浏览网页的时候不受任何影响。
 
-给HTTP Cookie设置secure，该cookie只能在HTTPS通道下被写入浏览器。
+给HTTP Cookie设置secure，该cookie只能在HTTPS连接中被浏览器传递到服务器端进行会话验证，如果是 HTTP 连接则不会传递该信息。
 
 如果浏览器禁用cookie，继续使用session的方法有两种，URL重写和表单隐藏字段。URL重写技术把session id直接附加在URL路径的后面，表单隐藏字段技术把session id写到表单的隐藏字段中，然后发给服务器。
 
@@ -51,4 +51,4 @@ Web Storage 支持事件通知机制，可以将数据更新的通知发送给�
 
 ### Reference
 
-<a href="http://blog.csdn.net/you23hai45/article/details/49052251">请描述一下 cookies，sessionStorage 和 localStorage 的区别</a>
+<a href="http://blog.csdn.net/you23hai45/article/details/49052251" target="_blank">请描述一下 cookies，sessionStorage 和 localStorage 的区别</a>
