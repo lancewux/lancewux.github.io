@@ -2,7 +2,7 @@
 
 Angular 1.x版本是个比较旧的东西了，比如依赖注入、自己独特的模块化，这些东西在ES6下已经很好地被解决了。AngularJS 1.3抛弃了对IE8的支持。Angular的2.0几乎是一个推翻重做的框架。
 
-React 15.x.x版本已经不支持IE8的DOM了，最后的支持版本为0.14.8，发布时间是2016.3.30，不算太过时，所以决定采用React v0.14.8来做。文档为<a href="http://react-ie8.xcatliu.com/react/index.html">react-ie8</a>。建议先看15版本的文档<a href="https://facebook.github.io/react/">react</a>，因为写得更好。
+React 15.x.x版本已经不支持IE8的DOM了，最后的支持版本为0.14.8，发布时间是2016.3.30，不算太过时，所以决定采用React v0.14.8来做。文档为<a href="http://react-ie8.xcatliu.com/react/index.html" target="_blank">react-ie8</a>。建议先看15版本的文档<a href="https://facebook.github.io/react/" target="_blank">react</a>，因为写得更好。
 
 React的定位是UI组件，所以做前端框架还要搭配其他插件来做，比如react-router, react-redux。
 
@@ -207,7 +207,7 @@ ReactDOM.render(
 
 #### 路由
 
-如果想使用路由，就需要安装react-router，考虑兼容性建议使用2.x.x版本，用法参见<a href="https://github.com/ReactTraining/react-router/tree/v2.8.1/docs">React Router v2.8.1</a>
+如果想使用路由，就需要安装react-router，考虑兼容性建议使用2.x.x版本，用法参见<a href="https://github.com/ReactTraining/react-router/tree/v2.8.1/docs" target="_blank">React Router v2.8.1</a>
 
 ```bash
 npm install --save react-router@2.1.0
@@ -215,7 +215,7 @@ npm install --save react-router@2.1.0
 
 #### 全局状态管理
 
-如果想使用全局状态管理，可以使用Redux，用法参见<a href="http://redux.js.org/docs/basics/UsageWithReact.html">UsageWithReact</a>。
+如果想使用全局状态管理，可以使用Redux，用法参见<a href="http://redux.js.org/docs/basics/UsageWithReact.html" target="_blank">UsageWithReact</a>。
 
 ```bash
 npm install --save redux@3.3.0
@@ -225,7 +225,7 @@ npm install --save react-redux@4.4.0
 
 #### 异步请求
 
-官方推荐使用fetch函数，但是暂时解决不了在IE下的兼容性问题，所以用一个ajax插件<a href="https://github.com/ForbesLindesay/ajax">ForbesLindesay/ajax</a>
+官方推荐使用fetch函数，但是暂时解决不了在IE下的兼容性问题，所以用一个ajax插件<a href="https://github.com/ForbesLindesay/ajax" target="_blank">ForbesLindesay/ajax</a>
 
 ```bash
 npm install --save ForbesLindesay/ajax
@@ -392,7 +392,7 @@ Redux可以看做Flux的一种变体，处理数据流如下：
 
 并没有一个专门的state文件来定义state。reducer定义了state的名称，默认值和改变state的具体实现。然后用reducer来实例化store。reducer改变state是用的switch语句，case是Action类型，case后的代码就是改变state的相应代码，通过匹配action类型执行相应的动作来改变action指定的state。
 
-React好像没有提供全局注入变量的入口。state需要通过Provider容器来实现全局注入，然后通过connect函数把dispatch action和get state映射到组件里。用法参见<a href="http://https//github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options">provider</a>
+React好像没有提供全局注入变量的入口。state需要通过Provider容器来实现全局注入，然后通过connect函数把dispatch action和get state映射到组件里。用法参见<a href="http://https//github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options" target="_blank">provider</a>
 
 
 解决兼容性问题
@@ -424,11 +424,11 @@ es5-shim.js是给Javascript engine打补丁的, 所以必须最先加载。由�
 相关参考资料
 -
 
-<a href="http://div.io/topic/1275">前端工程——基础篇</a>
+<a href="http://div.io/topic/1275" target="_blank">前端工程——基础篇</a>
 
-<a href="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a>
+<a href="https://github.com/fouber/blog/issues/6" target="_blank">大公司里怎样开发和部署前端代码</a>
 
-<a href="http://www.aliued.com/?p=3240">react 项目的一个ie8兼容性问题</a>
+<a href="http://www.aliued.com/?p=3240" target="_blank">react 项目的一个ie8兼容性问题</a>
 
-<a href="http://react-ie8.xcatliu.com/">Make your React app work in IE8</a>
+<a href="http://react-ie8.xcatliu.com/" target="_blank">Make your React app work in IE8</a>
 

@@ -2,4 +2,4 @@
 
 
 
-<a href="https://zhuanlan.zhihu.com/p/25407758" target="blank">Excuse me？这个前端面试在搞事！</a>
+<a href="https://zhuanlan.zhihu.com/p/25407758" target="_blank">Excuse me？这个前端面试在搞事！</a>

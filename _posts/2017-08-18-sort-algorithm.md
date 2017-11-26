@@ -257,7 +257,7 @@ console.log(arr);
 参考资料
 -
 
-<a href="http://blog.csdn.net/hguisu/article/details/7776068/">八大排序算法</a>
+<a href="http://blog.csdn.net/hguisu/article/details/7776068/" target="_blank">八大排序算法</a>
 
 
 

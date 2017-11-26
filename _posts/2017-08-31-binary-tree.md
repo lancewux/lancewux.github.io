@@ -79,4 +79,4 @@ B*数
 线索二叉树
 -
 
-<a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="blank">B树、B-树、B+树、B*树</a>
+<a href="http://www.cnblogs.com/oldhorse/archive/2009/11/16/1604009.html" target="_blank">B树、B-树、B+树、B*树</a>

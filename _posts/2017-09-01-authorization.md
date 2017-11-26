@@ -3,7 +3,7 @@
 HTTP Basic Authorization
 -
 
-HTTP基本认证是指Web浏览器或其他客户端程序发送请求时提供用户名加口令形式的凭证来进行身份认证。<a href="http://blog.csdn.net/dxswzj/article/details/39202217" target="blank"> HTTP Basic Authorization</a>
+HTTP基本认证是指Web浏览器或其他客户端程序发送请求时提供用户名加口令形式的凭证来进行身份认证。<a href="http://blog.csdn.net/dxswzj/article/details/39202217" target="_blank"> HTTP Basic Authorization</a>
 
 Base64算法编码（username：password ）
 

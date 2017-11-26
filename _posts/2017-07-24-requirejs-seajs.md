@@ -164,11 +164,11 @@ import的语法跟require不同，而且import必须放在文件的最开始，�
 
 ### Reference
 
-<a href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">amdjs/amdjs-api</a>
+<a href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md" target="_blank">amdjs/amdjs-api</a>
 
-<a href="https://github.com/cmdjs/specification/blob/master/draft/module.md">Common Module Definition / draft</a>
+<a href="https://github.com/cmdjs/specification/blob/master/draft/module.md" target="_blank">Common Module Definition / draft</a>
 
-<a href="https://github.com/seajs/seajs/issues/242">CMD 模块定义规范</a>
+<a href="https://github.com/seajs/seajs/issues/242" target="_blank">CMD 模块定义规范</a>
 
-<a href="http://www.cnblogs.com/guanghe/p/6560698.html">NodeJS中的require和import</a>
+<a href="http://www.cnblogs.com/guanghe/p/6560698.html" target="_blank">NodeJS中的require和import</a>
 
