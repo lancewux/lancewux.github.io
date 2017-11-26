@@ -221,13 +221,13 @@ Application level floods主要是针对应用软件层的，也就是高于OSI�
 
 
 
-<a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB/3802159?fr=aladdin&fromid=444572&fromtitle=DDOS" target="blank">分布式拒绝服务攻击</a>
+<a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB/3802159?fr=aladdin&fromid=444572&fromtitle=DDOS" target="_blank">分布式拒绝服务攻击</a>
 
-<a href="https://imququ.com/post/letsencrypt-certificate.html" target="blank">Let's Encrypt，免费好用的 HTTPS 证书</a>
+<a href="https://imququ.com/post/letsencrypt-certificate.html" target="_blank">Let's Encrypt，免费好用的 HTTPS 证书</a>
 
-<a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="blank">图解SSL/TLS协议</a>
+<a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html" target="_blank">图解SSL/TLS协议</a>
 
-<a href="https://www.zhihu.com/question/21518760" target="blank">HTTPS 要比 HTTP 多用多少服务器资源？</a>
+<a href="https://www.zhihu.com/question/21518760" target="_blank">HTTPS 要比 HTTP 多用多少服务器资源？</a>
 
 
 
