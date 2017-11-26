@@ -46,6 +46,26 @@ nodejs怎么利用服务器的多核资源。
 nodejs内存泄露有哪些情况，怎么判断内存是否泄露。
 
 
+杂项
+-
 
+### 浏览器输入url到整个页面显示出来经历的过程
+
+1. 输入地址
+2. 浏览器查找域名的 IP 地址
+3. 这一步包括 DNS 具体的查找过程，包括：浏览器缓存->系统缓存->路由器缓存...
+4. 浏览器向 web 服务器发送一个 HTTP 请求
+5. 服务器的永久重定向响应（从 http://example.com 到 http://www.example.com）
+6. 浏览器跟踪重定向地址
+7. 服务器处理请求
+8. 服务器返回一个 HTTP 响应
+9. 浏览器显示 HTML
+10. 浏览器发送请求获取嵌入在 HTML 中的资源（如图片、音频、视频、CSS、JS等等）
+11. 浏览器发送异步请求
+
+Reference
+-
+
+<a href="http://igoro.com/archive/what-really-happens-when-you-navigate-to-a-url/" target="_blank">What really happens when you navigate to a URL</a>
 
 
