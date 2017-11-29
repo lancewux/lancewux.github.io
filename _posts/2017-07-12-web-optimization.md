@@ -143,11 +143,15 @@ LZ77使用滑动窗口，一个字节一个字节地向后滑动寻找匹配串�
 
 使用codesplitting按路由划分模块来拆分代码。首页文件，提取css，提取vendor.js,manifest.js
 
+拆分vendor.js
+
 使用uglify压缩 minify 混淆 js css文件
 
 使用gzip压缩来压缩html css js等文件
 
 使用压缩工具压缩图片，使用內联图片 <a href="http://www.tuhaokuai.com/" target="_blank">图好快</a>
+
+懒加载图片
 
 禁用etag
 
