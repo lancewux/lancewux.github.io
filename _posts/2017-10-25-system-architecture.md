@@ -119,3 +119,7 @@ Nginx往下第一层是socket API，socket 往下有一层VFS，再往下是TCP�
 <a href="http://www.linuxvirtualserver.org/zh/lvs2.html" target="_blank">LVS集群的体系结构</a>
 
 <a href="http://www.infoq.com/cn/articles/tencent-millions-scale-docker-application-practice/" target="_blank">腾讯万台规模的Docker应用实践</a>
+
+<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653549108&idx=1&sn=c64dcd05f544304b0690c976596f227e&chksm=813a63acb64deaba890362d04907d11b83f233fe7068bca17857db7280d30e44285eab48ee0b&scene=21#wechat_redirect" target="_blank">美图在大型容器化平台日志的实践（一）选型思考篇</a>
+
+<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547390&idx=1&sn=c241c46b7c9eba70cd0324117835270a&scene=21#wechat_redirect" target="_blank">揭秘百万人围观的Facebook视频直播</a>
