@@ -161,31 +161,26 @@ console.log(arr);
 -
 
 ```javascript
-function swap(arr, a, b) {
-	const tmp = arr[a];
-	arr[a] = arr[b];
-	arr[b] = tmp;
-}
 
 function quickPart(arr, low, high) {
-	if(low < high) {
-		let a = low;
-		let b = high;
-		const tmp = arr[a];
-		while(a < b) {
-			while(a < b && arr[b] >= tmp) {
-				b--;
-			}
-			swap(arr, a, b);
-			while(a < b && arr[a] <= tmp) {
-				a++;
-			}
-			swap(arr, a, b);					
-		}
-		quickPart(arr, low, a - 1);
-		quickPart(arr, a + 1, high);
+	if(low >= high) {
+		return;
 	}
-	
+	let a = low;
+	let b = high;
+	const tmp = arr[a];
+	while(a < b) {
+		while(a < b && arr[b] >= tmp) {
+			b--;
+		}
+		arr[a] = arr[b]; arr[b] = tmp;
+		while(a < b && arr[a] <= tmp) {
+			a++;
+		}
+		arr[b] = arr[a]; arr[a] = tmp;					
+	}
+	quickPart(arr, low, a - 1);
+	quickPart(arr, a + 1, high);
 }
 
 function quickSort(arr) {
