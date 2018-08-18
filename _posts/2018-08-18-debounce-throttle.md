@@ -209,4 +209,6 @@ window.onscroll = throttle(log, 1000, { trailing: false }); // A A A A A
 参考资料
 -
 
+<a href="https://github.com/hanzichi/underscore-analysis/issues/21" target="_blank">underscore 函数去抖的实现</a>
+
 <a href="https://github.com/hanzichi/underscore-analysis/issues/22" target="_blank">underscore 函数节流的实现</a>
