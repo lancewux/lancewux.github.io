@@ -48,7 +48,13 @@ cookie会被同源的http请求携带，参与服务器通信。而sessionStorag
 
 Web Storage 支持事件通知机制，可以将数据更新的通知发送给监听者
 
+#### 定时清除localStorage
+
+localStorage 是持久化的存储，只能手动清除。存储的时候设置一个时间戳，下次进行判断再删除。
+
 
 ### Reference
 
 <a href="http://blog.csdn.net/you23hai45/article/details/49052251" target="_blank">请描述一下 cookies，sessionStorage 和 localStorage 的区别</a>
+
+<a href="https://segmentfault.com/q/1010000000801007" target="_blank">html5 的 localStorage 可否设置数据的时效时间</a>
