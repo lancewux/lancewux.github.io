@@ -5,10 +5,18 @@ badjs
 
 BJ_Report 是重写了 window.onerror 进行上报的，无需编写任何捕获错误的代码.等于是在最外层监听，一个子组件的异常会导致整个页面崩溃。主要用于上报，而不是阻止错误上抛
 
+window.onerror在跨域时会拿不到错误信息
+
+服务端的错误还需要另外处理
+
 给react加try-catch
 -
 
+一般是monkeypacth render方法，前后端可以一起处理，但是只能捕获render方法里的错误
+
 ### componentDidCatch
+
+前后的同时处理，分区域处理组件，捕获所有生命周期函数里的错误。
 
 ```
 class ErrorBoundary extends React.Component {
@@ -105,6 +113,8 @@ class MyComponent extends React.Component {
 -
 
 <a href="https://github.com/BetterJS" target="_blank">BetterJS</a>
+
+<a href="https://www.jianshu.com/p/315ffe6797b8" target="_blank">window.onerror的总结</a>
 
 <a href="https://segmentfault.com/a/1190000011379425" target="_blank">React V16 错误处理(componentDidCatch 示例)</a>
 
