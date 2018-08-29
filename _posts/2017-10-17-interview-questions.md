@@ -46,6 +46,27 @@ nodejs怎么利用服务器的多核资源。
 nodejs内存泄露有哪些情况，怎么判断内存是否泄露。
 
 
+bytedance
+-
+
+sum(1,2,3).valueOf();       //6
+
+sum(2,3)(2).valueOf();      //7
+
+sum(1)(2)(3)(4).valueOf();  //10
+
+sum(2)(4,1)(2).valueOf();   //9
+
+sum(){}
+
+sass
+
+实现 .m-10 { margin: 10px; }
+
+.m-x {margin: xpx; }
+
+
+
 杂项
 -
 
