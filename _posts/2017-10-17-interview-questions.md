@@ -49,15 +49,34 @@ nodejs内存泄露有哪些情况，怎么判断内存是否泄露。
 bytedance
 -
 
-sum(1,2,3).valueOf();       //6
+实现一个函数sum
 
-sum(2,3)(2).valueOf();      //7
+```
+function sum() {
+    // code here...
+}
+```
 
-sum(1)(2)(3)(4).valueOf();  //10
+使得：
 
-sum(2)(4,1)(2).valueOf();   //9
+```
+var a = sum(1,2,3).valueOf();
 
-sum(){}
+var b = sum(2,3)(2).valueOf();
+
+var c = sum(1)(2)(3)(4).valueOf();
+
+var d = sum(2)(4,1)(2).valueOf();
+
+console.log(a, b, c, d); //6, 7, 10, 9
+```
+
+```
+function sum () {
+    //
+}
+```
+
 
 sass
 
