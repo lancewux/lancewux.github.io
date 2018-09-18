@@ -62,4 +62,6 @@ webpack-dev-server将通过socket.io通知客户端更新
 
 <a href="http://www.ruanyifeng.com/blog/2017/05/server-sent_events.html" target="_blank">Server-Sent Events 教程</a>
 
+<a href="https://www.cnblogs.com/goody9807/p/4257192.html" target="_blank">SSE：服务器发送事件,使用长链接进行通讯</a>
+
 <a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank">WebSocket 教程</a>
