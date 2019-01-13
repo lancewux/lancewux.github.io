@@ -34,6 +34,8 @@ dig的全称是 (domain information groper)。它是一个用来灵活探测DNS�
 
 #### lsof -i:8080
 
+#### nc -v wiki.bytedance.net 443
+
 #### ps -ef | grep tomcat , ps -eo pid,comm,cmd
 
 #### pwd
